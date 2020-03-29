@@ -265,6 +265,7 @@ cartaFabrilServices.service('OrderService', [
       self.order.ruleExceptionNote = order.expTransgressaoRegra__c;
       self.order.possuiCombo = order.possuiCombo__c;
       self.order.allCombos = order.combos__c;
+      self.order.PodeAnteciparEntrega = order.PodeAnteciparEntrega__c;
     };
 
     this.mountItems = function(items, clone, productsIds, orderType) {
@@ -767,11 +768,11 @@ cartaFabrilServices.service('OrderService', [
       });
  
       //Referente ao projeto Paletizacao
-      if(produtoDaCondEspecial && newDate <= produtoDaCondEspecial.CondicaoEspecial__r.dataLimiteUtilizacao__c) {
+      if(produtoDaCondEspecial && (newDate >= produtoDaCondEspecial.CondicaoEspecial__r.dataInicial__c && newDate <= produtoDaCondEspecial.CondicaoEspecial__r.dataFinal__c)) {
         desc = produtoDaCondEspecial.Desconto__c ? produtoDaCondEspecial.Desconto__c : 0;
       }
 
-      return product.averageDiscount > (product[self.itemDiscountField] /*+ desc*/ || 0); //Comentado pois agora está vindo desconto especial embutido no desconto do produto.
+      return product.averageDiscount > (product[self.itemDiscountField] + desc || 0); //Comentado pois agora está vindo desconto especial embutido no desconto do produto.
     };
 
     this.validateItems = function() {
@@ -848,6 +849,7 @@ cartaFabrilServices.service('OrderService', [
         aceitaEntregaParcial__c: self.order.deliveryFractions,
         possuiCombo__c: self.order.possuiCombo,
         combos__c: self.order.allCombos,
+        PodeAnteciparEntrega__c: self.order.PodeAnteciparEntrega,
         percBonus__c: self.orderBonusPercent(),
         custoLogistica__c: self.orderLogisticsCost(),
         gerenciaRegional__c: self.client.gerenciaRegional__c

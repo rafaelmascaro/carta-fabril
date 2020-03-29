@@ -105,6 +105,17 @@
       </div>
 
       <div class="row">
+        <div class="col input-group">
+          <ion-checkbox
+            id="checkboxCombo"
+            ng-checked="orderService.order.PodeAnteciparEntrega"
+            ng-model="orderService.order.PodeAnteciparEntrega"
+            >Pode antecipar a entrega?</ion-checkbox
+          >
+        </div>
+      </div>
+
+      <div class="row">
         <div
           class="col col-50 input-group"
           ng-class="{'exception': orderService.order.paymentOption.bloqueiaPedido__c}">

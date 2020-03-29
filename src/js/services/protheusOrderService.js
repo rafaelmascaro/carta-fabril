@@ -44,6 +44,7 @@ cartaFabrilFactories.factory("createProtheusOrderBuildListQuery", function creat
 
           "pedidoSalesforce__r.possuiCombo__c,",
           "pedidoSalesforce__r.combos__c,",
+          "pedidoSalesforce__r.PodeAnteciparEntrega__c,",
 
           "(SELECT",
             "quantidadeFaturada__c, quantidadePedida__c, dataEntrega__c, descricaoProduto__c, tes__c,",
@@ -101,6 +102,7 @@ cartaFabrilFactories.factory('ProtheusOrder', ['ProtheusOrderItem', 'ProxyDecora
 
     this.possuiCombo     = _.get(attributes, 'pedidoSalesforce__r.possuiCombo__c')
     this.allCombos       = _.get(attributes, 'pedidoSalesforce__r.combos__c')
+    this.PodeAnteciparEntrega = _.get(attributes, 'pedidoSalesforce__r.PodeAnteciparEntrega__c')
 
     this.quantity = attributes.quantidadePedida__c
     this.differenceQuantity = Number(attributes.quantidadePedida__c) - Number(attributes.quantidadeFaturada__c)

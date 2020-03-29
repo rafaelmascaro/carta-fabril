@@ -33,7 +33,7 @@ cartaFabrilFactories.factory("createOrderBuildListQuery", function createOrderBu
           "percOutrosCustosLogisticos__c, numeroAjudantes__c, tipoBloqueio__c,",
           "custoAjudante__c, aceitaEntregaParcial__c, valorPedidoMinimo__c,",
           "valorDuplicataMinima__c, motivoRejeicao__c, dataEntrega__c, id_protheus__c,",
-          "possuiCombo__c, combos__c, ", 
+          "possuiCombo__c, combos__c, PodeAnteciparEntrega__c, ", 
           "(SELECT",
             "PricebookEntry.Product2.Name, UnitPrice,",
             "Quantity, descricaoProduto__c,",
@@ -94,6 +94,7 @@ cartaFabrilFactories.factory('Order', ['OrderItem', 'ProxyDecorator', function (
 
     this.possuiCombo = attributes.possuiCombo__c
     this.allCombos = attributes.combos__c
+    this.PodeAnteciparEntrega = PodeAnteciparEntrega__c
     
     this.totalAmount = attributes.valorTotalSemImpostos__c
     this.totalQuantity = attributes.QuantidadeTotal__c
