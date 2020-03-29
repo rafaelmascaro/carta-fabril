@@ -1,0 +1,32 @@
+<ion-modal-view class="order-blocked-warning">
+  <ion-header-bar>
+    <p class="title"><i class="fa fa-exclamation-triangle"></i></p>
+  </ion-header-bar>
+
+  <ion-content class="padding">
+    <p><strong>Não é possível colocar pedidos para este cliente.<br>Motivos:</strong></p>
+
+    <div class="reason" ng-show="client.suspenso__c">
+      <p class="title"><strong> - Cliente suspenso</strong></p>
+      <p>{{client.obsSuspensao__c}}</p>
+    </div>
+
+    <div class="reason" ng-show="client.bloqueado__c == 'Sim'">
+      <p><strong> - Cliente bloqueado</strong></p>
+    </div>
+
+    <div class="reason" ng-show="client.statusCliente__c == 'Inativo'">
+      <p><strong> - Cliente inativo</strong></p>
+    </div>
+
+    <div class="reason" ng-show="!client.owner.IsActive">
+      <p><strong> - Proprietário do Cliente Inativo </strong></p>
+    </div>
+
+
+  </ion-content>
+
+  <ion-footer-bar>
+    <button class="button pull-right" ng-click="dismissWarning()">Ok, entendi</button>
+  </ion-footer-bar>
+</ion-modal-view>

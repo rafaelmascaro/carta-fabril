@@ -1,0 +1,45 @@
+@font-face {
+  font-family: openSansLight;
+  src: url(../fonts/OpenSans-Light.ttf);
+}
+
+@font-face {
+  font-family: openSansRegular;
+  src: url(../fonts/OpenSans-Regular.ttf);
+}
+
+@font-face {
+  font-family: courierNew;
+  src: url(../fonts/CourierNew.ttf)
+}
+
+@font-face {
+  font-size: courierNewBold;
+  src: url(../fonts/CourierNewBold.ttf)
+}
+
+@font-face {
+  font-family: icomoon;
+  src:  url('../fonts/icomoon.eot?nlg3kx');
+  src:  url('../fonts/icomoon.eot?nlg3kx#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?nlg3kx') format('truetype'),
+    url('../fonts/icomoon.woff?nlg3kx') format('woff'),
+    url('../fonts/icomoon.svg?nlg3kx#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.icon-fa-notafiscal {
+  font-family: icomoon;
+
+  &:before {
+    content: "\e900";
+  }
+}
+
+
+$font-opensans-light: openSansLight, sans-serif;
+$font-opensans-regular: openSansRegular, sans-serif;
+$font-couriernew: courierNew, sans-serif;
+$font-couriernew-bold: courierNewBold, sans-serif;
+$tabs-blue: #0083b4;

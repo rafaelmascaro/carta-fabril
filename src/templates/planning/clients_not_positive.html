@@ -1,0 +1,36 @@
+<ion-view view-title="Clientes não positivados" cache-view="false">
+  <div class="bar-subheader item-input clients-search-bar">
+    <form class="item-input-wrapper" ng-submit="search()">
+      <i class="icon ion-ios-search placeholder-icon"></i>
+      <input type="search" class="input-search" placeholder="Busca" ng-model="query.term" />
+      <i ng-if="query.term.length" class="fa fa-times-circle" ng-click="clearQuery()"></i>
+    </form>
+    <button ng-click="search()" style="padding: 6px 5px 5px">Buscar</button>
+  </div>
+
+  <ion-content padding="true" class="clients has-subheader">
+    <ul class="list list-header">
+      <li ng-repeat="(key, value) in sortedClients" class="item item-header" ng-show="filteredValue.length">
+        <h1>{{key}}</h1>
+
+        <ul class="list">
+          <li class="item" ng-repeat="client in value as filteredValue track by client.Id" ng-click="goToNewPlanning(client.Id)">
+
+            <h2>
+              {{::client.nomeFantasia__c}}
+            </h2>
+            <p><strong>Razão social:</strong> {{::client.Name}}</p>
+            <p><strong>Código e loja:</strong> {{::client.codigoCliente__c}}-{{::client.loja__c}}</p>
+            <p><strong>Loja do cliente:</strong> {{::client.lojaCliente__c}}</p>
+            <p><strong>CNPJ: </strong>{{::client.cnpjCpf__c}}</p>
+            <p><strong>Cód. Vendedor</strong> {{::client.vendedorRepresentante__r.codigo__c}}</p>
+            <p><strong>Vendedor</strong> {{::client.vendedorRepresentante__r.Name}}</p>
+            <div ng-show="::client.naoPodeFazerPedido__c">
+              <i class="fa fa-exclamation-triangle"></i>
+            </div>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </ion-content>
+</ion-view>

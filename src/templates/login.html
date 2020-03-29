@@ -1,0 +1,27 @@
+<ion-view hide-nav-bar="true" class="login-page">
+  <ion-content>
+    <div class="row">
+      <div class="col">
+        <div class="logo"></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <button class="azambutton" ng-click="login(true)">
+        <h2><i class="fa fa-building"></i></h2>
+        <p>Vendedor</p>
+        <p style="font-size:14px;margin-top:-5px;">Colaborador CLT</p>
+      </button>
+    </div>
+
+    <div class="row">
+      <button class="azambutton" ng-click="login(false)">
+        <h2><i class="fa fa-briefcase"></i></h2>
+        <p>Representante</p>
+        <p style="font-size:14px;margin-top:-5px;">Usuários Parceiros <br /> (Pessoa Jurídica)</p>
+      </button>
+    </div>
+
+    <div class="row" style="text-align: center;color:#fff;display:block">{{ env }}v. {{ version }}</div>
+  </ion-content>
+</ion-view>

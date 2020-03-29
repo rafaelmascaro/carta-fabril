@@ -1,0 +1,72 @@
+<ion-modal-view class="product">
+  <ion-header-bar align-title="left">
+    <p class="title">{{ (product.category) | characters:35 }}</p>
+    <button class="button" ng-click="close()">FECHAR <i class="icon ion-ios-close-outline"></i></button>
+  </ion-header-bar>
+
+  <form name="form">
+    <ion-content class="padding">
+      <div class="image">
+        <img ng-src="{{product.imageURL || 'img/product-placeholder.png' }}"></img>
+      </div>
+
+      <p class="other-description">
+        {{ product.otherDescription }}
+      </p>
+
+      <dl>
+        <dt>Descrição</dt>
+        <dd>{{ product.description }}</dd>
+
+        <dt>Detalhamento</dt>
+        <dd>{{ product.details }}</dd>
+
+        <dt>Código do produto</dt>
+        <dd>{{ product.code }}</dd>
+
+        <dt>Unidade de medida</dt>
+        <dd>{{ product.measureUnit }}</dd>
+
+        <dt>NCM (Classificação fiscal)</dt>
+        <dd>{{ product.ncm }}</dd>
+
+        <dt>Cest</dt>
+        <dd>{{ product.cest }}</dd>
+
+        <dt>EAN (Número do código de barras do pacote)</dt>
+        <dd>{{ product.ean13 }}</dd>
+
+        <dt>Dimensões do pacote – Altura x Largura x Comprimento</dt>
+        <dd>{{ product.packDimensions }}</dd>
+
+        <dt>Peso bruto do pacote</dt>
+        <dd>{{ product.packWeight }}</dd>
+
+        <dt>DUN (Número do código de barras do fardo/caixa)</dt>
+        <dd>{{ product.dun14 }}</dd>
+
+        <dt>Dimensões do fardo/caixa</dt>
+        <dd>{{ product.dimensions }}</dd>
+
+        <dt>Peso bruto fardo/caixa</dt>
+        <dd>{{ product.weight }}</dd>
+
+        <dt>Gramatura</dt>
+        <dd>{{ product.grammage }}</dd>
+
+        <dt>Cubagem</dt>
+        <dd>{{ product.cubature }}</dd>
+
+        <dt>Paletização (Base x Altura)</dt>
+        <dd>{{ product.palletizing }}</dd>
+
+        <dt>Validade</dt>
+        <dd>{{ product.dueDate}}</dd>
+
+        <dt>Alíquota IPI</dt>
+        <dd>{{ product.ipiAliquot}}%</dd>
+
+      </dl>
+    </ion-content>
+  </form>
+</ion-modal-view>

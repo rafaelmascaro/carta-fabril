@@ -1,0 +1,13 @@
+{
+    "env": "sds",
+    "appName": "Carta Fabril SDS",
+    "appId": "br.com.carta_fabril.sds",
+    "sfClientId": "3MVG9qwrtt_SGpCvjWgjr6iTlza0.ITALKCPgR1zhYExpxYrATJwfdPxkGzZNJXLwmxOPssF9v.gOH2biKXFu",
+    "sfClientSecret": "E907908D85C3098F22E764725D785596A20475FF162BDABB42ABF98F94BD8447",
+    "sfOauthUrl": "https://test.salesforce.com/",
+    "sfPartnerOauthUrl": "https://sds-portaldevendascartafabril.cs42.force.com/representantes/",
+    "sfRedirectUri": "https://carta-fabril-new-app.herokuapp.com/from_salesforce",
+    "gmapsApiKey": "AIzaSyCLWbpUqdb2tdco8Q5dOs98TSqWdO4utEE",
+    "destination": "web"
+  }
+  

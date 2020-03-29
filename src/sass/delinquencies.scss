@@ -1,0 +1,74 @@
+.delinquencies {
+  li {
+    position: relative;
+  }
+
+  dl {
+    margin-top: 10px;
+
+    dt {
+      display: inline;
+      font-size: 13px;
+      font-weight: normal;
+      color: #9f9f9f;
+    }
+
+    dd {
+      display: inline;
+      font-size: 14px;
+    }
+  }
+
+  ul > li > div:last-child {
+    top: 82px;
+    right: 0;
+    position: absolute;
+    font-size: 14px;
+  }
+
+  .item {
+    padding: 20px 0px 0px 0px;
+    border-style: dotted;
+    border-width: 0px 0px 2px 0px;
+
+    &:hover {
+      background-color: rgba(127, 127, 127, 0.1);
+    }
+
+    p {
+      font-weight: lighter;
+      white-space: normal;
+    }
+
+    i.icon {
+      position: relative;
+      display: inline-block;
+      font-size: 14px;
+      color: #00a88a;
+    }
+  }
+
+  .meta {
+    font-style: italic;
+    font-size: 12px;
+  }
+
+  .padding {
+    padding: 15px 15px 15px 15px;
+  }
+
+  .delayed-days {
+    top: 48px;
+    right: 0;
+    position: absolute;
+    font-size: 12px;
+    color: #fff;
+    height: 18px;
+    padding: 0 20px;
+    font-size: 12px;
+    text-align: center;
+    line-height: 1.5;
+    background-color: red;
+  }
+
+}

@@ -1,0 +1,11 @@
+<p><strong>{{::contact.name}}</strong> {{::role}}</p>
+<p ng-repeat="responsibility in responsibilities">{{::responsibility}}</p>
+<p>Email: <a href="mailto:{{contact.email}}">{{::contact.email}}</a></p>
+<p ng-if="contact.mobile || contact.phone">
+    <cf-phone label="Cel." number="contact.mobile"></cf-phone>
+    <cf-phone label="/"    number="contact.mobile2"></cf-phone>
+    <span ng-if="contact.mobile && contact.phone">-</span>
+    <cf-phone label="Fixo" number="contact.phone"></cf-phone>
+    {{contact.ramal ? 'Ramal: ' + contact.ramal : ''}}
+</p>
+<p ng-if="contact.radio">Rádio: {{::contact.radio}}</p>

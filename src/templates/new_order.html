@@ -1,0 +1,15 @@
+<ion-view class="new-order">
+  <ion-tabs class="tabs-cf">
+    <ion-tab title="Condições" ui-sref="new_order.conditions({ clientId: clientId, orderId: orderId })">
+      <ion-nav-view name="tab-conditions"></ion-nav-view>
+    </ion-tab>
+
+    <ion-tab title="Itens" ui-sref="new_order.items({ clientId: clientId, orderId: orderId })">
+      <ion-nav-view name="tab-items"></ion-nav-view>
+    </ion-tab>
+
+    <ion-tab title="Resumo" ui-sref="new_order.summary({ clientId: clientId, orderId: orderId })">
+      <ion-nav-view name="tab-summary"></ion-nav-view>
+    </ion-tab>
+  </ion-tabs>
+</ion-view>

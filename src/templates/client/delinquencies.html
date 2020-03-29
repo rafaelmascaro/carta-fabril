@@ -1,0 +1,91 @@
+<ion-view view-title="Inadimplências" cache-view="false">
+  <ion-nav-title>{{client.nomeFantasia__c}}</ion-nav-title>
+
+  <ion-nav-buttons side="right">
+    <div class="client-buttons">
+      <div class="button button-balanced" ng-click="newOrder(client.Id)">
+        Novo pedido
+      </div>
+      <button class="button button-icon ion-more" ng-click="popover.show($event)"></button>
+    </div>
+  </ion-nav-buttons>
+
+  <ion-content padding="true" class="delinquencies with-tab-title">
+    <h1 class="current-tab-title">
+      Inadimplências
+      <button class="button button-small button-outlined button-icon pull-right" ng-click="openFilter($event)">
+        <i class="fa fa-filter"></i>
+      </button>
+    </h1>
+
+    <ion-refresher on-refresh="doRefresh()"></ion-refresher>
+
+    <div>
+      <div class="empty-list-msg" ng-if="!list.length">Nenhuma inadimplência</div>
+      <ul class="list">
+        <li class="item" ng-click="open(delinquency.id)" ng-repeat="delinquency in list track by delinquency.id">
+          <h2>
+            {{ delinquency.name }}
+          </h2>
+
+          <dl>
+            <div>
+              <dt>Parcela</dt>
+              <dd>{{ delinquency.parcel }}</dd>
+            </div>
+
+            <div>
+              <dt>Série</dt>
+              <dd>{{ delinquency.invoiceSerialNumber }}</dd>
+            </div>
+
+            <div>
+              <dt>Tipo</dt>
+              <dd>{{ delinquency.type }}</dd>
+            </div>
+
+            <div>
+              <dt>Data de Emissão</dt>
+              <dd>{{ delinquency.orderDate | date:'dd/MM/yyyy' }}</dd>
+            </div>
+
+            <div>
+              <dt>Data de Vencimento</dt>
+              <dd>{{ delinquency.dueDate | date:'dd/MM/yyyy' }}</dd>
+            </div>
+
+            <div>
+              <dt>Número da Nota Fiscal</dt>
+              <dd>{{ delinquency.invoice }}</dd>
+            </div>
+
+            <div>
+              <dt>Condição de Pagamento</dt>
+              <dd>{{ delinquency.paymentCondition }}</dd>
+            </div>
+
+            <div>
+              <dt>Valor do Título</dt>
+              <dd>{{ delinquency.totalAmount | currency:"R$ " }}</dd>
+            </div>
+
+            <div>
+              <dt>Saldo do Título</dt>
+              <dd>{{ delinquency.balance | currency:"R$ " }}</dd>
+            </div>
+
+            <div class="delayed-days">
+              {{ delinquency.delayedDays }}
+            </div>
+          </dl>
+        </li>
+      </ul>
+      <div ng-if="list.length && !isLastPage">
+        <button
+          class="button button-load-more button-block"
+          ng-click="getMore()"
+        >CARREGAR MAIS</button>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

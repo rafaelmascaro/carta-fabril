@@ -1,0 +1,214 @@
+<div class="button-bar">
+  <button class="button button-small button-outline" ng-click="changeTab('original')" ng-class="{'button-selected': activeTab === 'original'}">PENDENTE</button>
+  <button class="button button-small button-outline" ng-click="changeTab('protheus')" ng-class="{'button-selected': activeTab === 'protheus'}">CARTEIRA</button>
+  <button class="button button-small button-outline" ng-click="changeTab('billed')" ng-class="{'button-selected': activeTab === 'billed'}">FINALIZADO</button>
+</div>
+
+<div ng-if="activeTab == 'original'">
+  <div class="empty-list-msg" ng-if="!scopes.original.orders.length">Você ainda não possui pedidos</div>
+  <ul class="list">
+
+    <li class="item" ng-repeat="order in scopes.original.orders track by $index" ng-click="goToOrder(order.orderNumber)">
+      <h2>
+        {{ order.orderNumber }}
+      </h2>
+
+      <dl>
+        <div ng-if="displayCompleteDetails" style="margin-bottom:5px">
+          <dd style="white-space:normal;width:235px;display:inline-block">{{ order.accountName }}</dd>
+        </div>
+
+        <div ng-if="displayCompleteDetails" style="margin-bottom:5px">
+          <dd style="white-space:normal;width:235px;display:inline-block">{{ order.fantasyName }}</dd>
+        </div>
+
+        <div ng-if="displayCompleteDetails" style="margin-bottom:5px">
+          <dd style="white-space:normal;width:235px;display:inline-block">{{ order.clientCode }}<span ng-if="order.store != null"> / {{ order.store }}</span></dd>
+        </div>
+
+        <div>
+          <dt>Quantidade Total</dt>
+          <dd>{{ order.totalQuantity }}</dd>
+        </div>
+
+        <div>
+          <dt>Quantidade Bonificada</dt>
+          <dd>{{ order.totalSubsidized }}</dd>
+        </div>
+
+        <div>
+          <dt>Valor Total Venda s/ Impostos</dt>
+          <dd>{{ order.totalAmount | currency:"R$ " }}</dd>
+        </div>
+
+        <div>
+          <dt>Valor Total Bonificação s/ Impostos</dt>
+          <dd>{{ order.totalBonus | currency:"R$ " }}</dd>
+        </div>
+
+        <div>
+          <dt>Possui Combos:</dt>
+          <dd>{{ order.possuiCombo ? 'Sim' : 'Não' }}</dd>
+        </div>
+
+        <div ng-if="(order.status == 'Reprovado' || order.status == 'Rejeitado') && (order.rejectReason != '' || order.rejectReason != 'Não Disponível')">
+          <dt>Motivo da {{ order.status == 'Reprovado' ? 'Reprovação' : 'Rejeição' }}</dt>
+          <dd style="white-space:normal">{{ order.rejectReason }}</dd>
+        </div>
+      </dl>
+
+      <div>
+        <div class="sidelabel">Data de Envio</div>
+        <div class="date">{{ order.date | date: "dd/MM/yyyy" }}</div>
+        <div class="status" ng-class="order.status | lowercase">{{ order.status }}</div>
+      </div>
+    </li>
+  </ul>
+  <div ng-if="scopes.original.orders.length && !scopes.original.isLastPage">
+    <button
+      class="button button-load-more button-block"
+      ng-click="scopes.original.getMoreOrders()"
+    >CARREGAR MAIS</button>
+  </div>
+</div>
+<div ng-if="activeTab == 'protheus'">
+  <div class="empty-list-msg" ng-if="!scopes.protheus.orders.length">Ainda não existem pedidos na sua carteira</div>
+  <ul class="list">
+    <li class="item" ng-repeat="order in scopes.protheus.orders track by $index" ng-click="openProtheusOrder(order.protheusCode)">
+      <h2 ng-class="{'warning':order.differenceQuantity > 0}">
+        {{ order.protheusCode }}
+      </h2>
+
+      <dl>
+        <div ng-if="displayCompleteDetails" style="margin-bottom:5px">
+          <dd style="white-space:normal;width:235px;display:inline-block">{{ order.accountName }}</dd>
+        </div>
+
+        <div ng-if="displayCompleteDetails" style="margin-bottom:5px">
+          <dd style="white-space:normal;width:235px;display:inline-block">{{ order.fantasyName }}</dd>
+        </div>
+
+        <div ng-if="displayCompleteDetails" style="margin-bottom:5px">
+          <dd style="white-space:normal;width:235px;display:inline-block">{{ order.clientCode }} / {{ order.store }}</dd>
+        </div>
+
+        <div>
+          <dt>Unidade de Faturamento</dt>
+          <dd>{{ order.billingUnit }}</dd>
+        </div>
+
+        <div>
+          <dt>Pedido Original</dt>
+          <dd>{{ order.originalOrder }}</dd>
+        </div>
+
+        <div>
+          <dt>Quantidade Total</dt>
+          <dd>{{ order.quantity }}</dd>
+        </div>
+
+        <div>
+          <dt>Quantidade Saldo</dt>
+          <dd>{{ order.differenceQuantity }}</dd>
+        </div>
+
+        <div>
+          <dt>Valor Total s/ Impostos</dt>
+          <dd>{{ order.totalAmount | currency:"R$ " }}</dd>
+        </div>
+
+        <div>
+          <dt>Valor Saldo s/ Impostos</dt>
+          <dd>{{ order.balance | currency:"R$ " }}</dd>
+        </div>
+
+        <div>
+          <dt>Possui Combos:</dt>
+          <dd>{{order.possuiCombo ? 'Sim' : 'Não' }}</dd>
+        </div>
+
+      </dl>
+
+      <div>
+        <div class="sidelabel">Data de Emissão</div>
+        <div class="date">{{ order.protheusDate | date: "dd/MM/yyyy" }}</div>
+        <div class="status order_type" ng-class="{ 'venda' : order.orderType == 'Venda', 'bonificada' : order.orderType == 'Bonificação' }">{{ order.orderType }}</div>
+        <div class="status bloqueado" ng-if="order.blockedBy">{{ order.blockedBy }}</div>
+      </div>
+    </li>
+  </ul>
+  <div ng-if="scopes.protheus.orders.length && !scopes.protheus.isLastPage">
+    <button
+      class="button button-load-more button-block"
+      ng-click="scopes.protheus.getMoreOrders()"
+    >CARREGAR MAIS</button>
+  </div>
+</div>
+<div ng-if="activeTab == 'billed'">
+  <div class="empty-list-msg" ng-if="!scopes.billed.orders.length">Ainda não existem pedidos faturados</div>
+  <ul class="list">
+    <li class="item" ng-repeat="order in scopes.billed.orders track by $index" ng-click="openBilledProtheusOrder(order.protheusCode)">
+      <h2>
+        {{ order.protheusCode }}
+      </h2>
+
+      <dl>
+        <div ng-if="displayCompleteDetails" style="margin-bottom:5px">
+          <dd style="white-space:normal;width:235px;display:inline-block">{{ order.accountName }}</dd>
+        </div>
+
+        <div ng-if="displayCompleteDetails" style="margin-bottom:5px">
+          <dd style="white-space:normal;width:235px;display:inline-block">{{ order.fantasyName }}</dd>
+        </div>
+
+        <div ng-if="displayCompleteDetails" style="margin-bottom:5px">
+          <dd style="white-space:normal;width:235px;display:inline-block">{{ order.clientCode }} / {{ order.store }}</dd>
+        </div>
+
+        <div>
+          <dt>Unidade de Faturamento</dt>
+          <dd>{{ order.billingUnit }}</dd>
+        </div>
+
+        <div>
+          <dt>Pedido Original</dt>
+          <dd>{{ order.originalOrder }}</dd>
+        </div>
+
+        <div>
+          <dt>Quantidade Total</dt>
+          <dd>{{ order.quantity }}</dd>
+        </div>
+
+        <div>
+          <dt>Valor Total s/ Impostos</dt>
+          <dd>{{ order.totalAmount | currency:"R$ " }}</dd>
+        </div>
+
+        <div>
+          <dt>Quantidade Faturada</dt>
+          <dd>{{ order.deliveredQuantity }}</dd>
+        </div>
+
+        <div>
+          <dt>Possui Combos:</dt>
+          <dd>{{order.possuiCombo ? 'Sim' : 'Não' }}</dd>
+        </div>
+
+      </dl>
+
+      <div>
+        <div class="sidelabel">Data de Emissão</div>
+        <div class="date">{{ order.protheusDate | date: "dd/MM/yyyy" }}</div>
+        <div class="status order_type" ng-class="{ 'venda' : order.orderType == 'Venda', 'bonificada' : order.orderType == 'Bonificação' }">{{ order.orderType }}</div>
+        <div class="status bloqueado" ng-if="order.blockedBy">{{ order.blockedBy }}</div>
+      </div>
+    </li>
+  </ul>
+  <div ng-if="scopes.billed.orders.length && !scopes.billed.isLastPage">
+    <button
+      class="button button-load-more button-block"
+      ng-click="scopes.billed.getMoreOrders()"
+    >CARREGAR MAIS</button>
+  </div>
+</div>

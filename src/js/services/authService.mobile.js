@@ -1,0 +1,134 @@
+cartaFabrilServices.service('AuthService', ['$q', '$http', function ($q, $http) {
+
+  this.getAuthorizeUrl = function (internal) {
+    var redirectUri = '@@sfRedirectUri',
+        clientId    = '@@sfClientId',
+        loginUrl    = internal ? '@@sfOauthUrl' : '@@sfPartnerOauthUrl'
+
+    var url = loginUrl + '/services/oauth2/authorize?display=touch' +
+      '&response_type=token&client_id=' + escape(clientId) +
+      '&redirect_uri=' + escape(redirectUri)
+
+    return url
+  }
+
+  this.login = function (internal) {
+    var self        = this,
+        redirectUri = '@@sfRedirectUri',
+        deferred    = $q.defer()
+
+    if (self.isLogged()) {
+      deferred.resolve()
+    } else {
+      var browserRef = window.cordova.InAppBrowser.open(self.getAuthorizeUrl(internal), "_blank", "location=no")
+
+      browserRef.addEventListener("loadstop", function (event) {
+        var url = event.url
+
+        if (url.startsWith(redirectUri)) {
+          var rawParams = url.substr(url.indexOf("#") + 1)
+
+          self.setAuthData(rawParams)
+          browserRef.close()
+          deferred.resolve()
+        }
+      })
+
+      browserRef.addEventListener('exit', function(event) {
+        deferred.reject("The sign in flow was canceled")
+      })
+    }
+
+    return deferred.promise
+  }
+
+  this.refreshToken = function () {
+    var self          = this,
+        authData      = this.getAuthData(),
+        authUrl       = "@@sfOauthUrl" + "/services/oauth2/token",
+        config = { headers: {"Content-Type":"application/x-www-form-urlencoded"} },
+        params = {
+          grant_type: "refresh_token",
+          client_id: "@@sfClientId",
+          client_secret: "@@sfClientSecret",
+          refresh_token: authData.refresh_token
+        }
+
+    return $http.post(authUrl, null, {
+      params: params,
+      headers: {"Content-Type":"application/x-www-form-urlencoded"}
+    }).then(function (response) {
+      //success
+      self.storeRefreshedToken(response.data.access_token)
+    }, function(response) {
+      //error
+      console.log("erro ao dar refresh token")
+      console.log(response)
+      console.log(response.data)
+      console.log(response.headers())
+    })
+  }
+
+  this.setAuthData = function (rawParams) {
+    var parts     = rawParams.split('&'),
+        data      = {}
+
+    for (var i = 0; i < parts.length; i++) {
+      var pair = parts[i].split('=')
+      data[pair[0]] = decodeURIComponent(pair[1])
+    }
+
+    this.storeAuthData(data)
+  }
+
+  this.storeAuthData = function (data) {
+    localStorage.setItem("auth", JSON.stringify(data))
+  }
+
+  this.storeUserData = function (data) {
+    localStorage.setItem("user", JSON.stringify(data))
+  }
+
+  this.storeRefreshedToken = function (token) {
+    var authData = this.getAuthData()
+
+    authData.access_token = token
+
+    this.storeAuthData(authData)
+  }
+
+  this.getAuthData = function () {
+    return JSON.parse(localStorage.getItem("auth"))
+  }
+
+  this.isLogged = function () {
+    var authData = this.getAuthData()
+
+    return authData && authData.access_token != null
+  }
+
+  this.getUserData = function () {
+    return JSON.parse(localStorage.getItem("user"))
+  }
+
+  this.saveUserData = function () {
+    if (this.isLogged()) {
+      var authData = this.getAuthData();
+
+      return $http({
+        method : 'GET',
+        url : authData.id,
+        headers : {
+          'Authorization' : authData.token_type + ' ' + authData.access_token
+        }
+      }).then(function(res) {
+
+        this.storeUserData(res.data)
+        return res.data
+
+      }.bind(this))
+    }
+
+    return $q.reject();
+  }
+}])

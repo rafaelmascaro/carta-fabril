@@ -1,0 +1,6 @@
+image: karma-chrome-node6
+before_script:
+  - bower install --allow-root
+test:
+  script:
+    - karma start karma.ci.conf.js --single-run

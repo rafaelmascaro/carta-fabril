@@ -1,0 +1,90 @@
+<ion-modal-view class="detail-modal">
+  <ion-header-bar align-title="left">
+    <p class="title">{{ invoice.name | characters:35 }}</p>
+    <button class="button" ng-click="close()">FECHAR <i class="icon ion-ios-close-outline"></i></button>
+  </ion-header-bar>
+
+  <form name="form">
+    <ion-content class="padding">
+      <dl class="detail-items">
+
+        <dt>Série da Nota Fiscal</dt>
+        <dd>{{ invoice.serialNumber }}</dd>
+
+        <dt>Filial</dt>
+        <dd>{{ invoice.branch }}</dd>
+
+        <dt>Número do pedido original</dt>
+        <dd>{{ invoice.orderNumber }}</dd>
+
+        <dt>Carteira</dt>
+        <dd>{{ invoice.protheusOrderNumber }}</dd>
+
+        <dt>Cód Vendedor</dt>
+        <dd>{{ invoice.salerCode }}</dd>
+
+        <dt>Vendedor</dt>
+        <dd>{{ invoice.salerName }}</dd>
+
+        <dt>Tipo de Pedido</dt>
+        <dd>{{ invoice.orderType }}</dd>
+
+        <dt>Tipo de Frete</dt>
+        <dd>{{ invoice.freightType }}</dd>
+
+        <dt>Condição de Pagamento</dt>
+        <dd>{{ invoice.paymentCondition }}</dd>
+
+        <dt>Valor total sem impostos</dt>
+        <dd>{{ invoice.totalAmmountWithoutTaxes | currency:"R$ " || 'Não Disponível' }}</dd>
+
+        <dt>Valor total com impostos</dt>
+        <dd>{{ invoice.totalAmmount | currency:"R$ " || 'Não Disponível' }}</dd>
+
+        <dt ng-if="invoice.slips">Duplicatas</dt>
+        <dd ng-if="invoice.slips">
+          <table class="inner-table">
+            <tr>
+              <th>Número</th>
+              <th>Parcela</th>
+              <th>Vencimento</th>
+              <th>Valor</th>
+            </tr>
+            <tr ng-repeat="slip in invoice.slips track by $index">
+              <td>{{ slip.number }}</td>
+              <td>{{ slip.parcel}}</td>
+              <td>{{ slip.dueDate | date:'dd/MM/yyyy' }}</td>
+              <td>{{ slip.value  | currency:"R$ " || 'Não Disponível' }}</td>
+            </tr>
+          </table>
+        </dd>
+
+        <dt>Produtos</dt>
+        <dd>
+          <ul class="inner-list">
+            <li ng-repeat="product in invoice.products track by $index">
+              <h4 class="inner-list-title">{{ product.code }}</h4>
+              <dl>
+                <dd>{{ product.name }}</dd>
+
+                <dt>Quantidade</dt>
+                <dd>{{ product.quantity }}</dd>
+
+                <dt>Valor Unitário</dt>
+                <dd>{{ (product.price | currency:"R$ ") || "Não Disponível" }}</dd>
+
+                <dt>Valor Total sem Impostos</dt>
+                <dd>{{ (product.totalAmmountWithoutTaxes | currency:"R$ ") || 'Não Disponível' }}</dd>
+
+                <dt>Valor Total com Impostos</dt>
+                <dd>{{ (product.totalAmmount | currency:"R$ ") || 'Não Disponível' }}</dd>
+              </dl>
+            </li>
+          </ul>
+        </dd>
+
+      </dl>
+
+    </ion-content>
+  </form>
+</ion-modal-view>

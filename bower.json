@@ -1,0 +1,21 @@
+{
+  "name": "carta-fabril-app",
+  "dependencies": {
+    "ionic": "1.2.4",
+    "angular-mocks": "~1.4.3",
+    "ngCordova": "~0.1.26-alpha",
+    "jsforce": "~1.6.3",
+    "lodash": "^4.11.2",
+    "fontawesome": "~4.5.0",
+    "angular-google-maps": "~2.3.3",
+    "angular-simple-logger": "~0.1.7",
+    "moment": "~2.14.1",
+    "angular-input-masks": "^2.4.0",
+    "moment-business": "^3.0.1",
+    "ionic-multiselect": "^0.1.8",
+    "angular-filter": "0.5.17"
+  },
+  "resolutions": {
+    "angular": "1.4.3"
+  }
+}

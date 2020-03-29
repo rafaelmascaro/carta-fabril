@@ -1,0 +1,152 @@
+cartaFabrilServices.service("OrdersService", ["$q", "Order", "SalesforceModelUtils", "createOrderBuildListQuery",
+  function OrdersService ($q, Order, SalesforceModelUtils, createOrderBuildListQuery) {
+
+  this.pageSize = 10
+  this.objectName = "Order"
+  this.model = Order
+  this.userColumn = 'AccountId'
+
+  this.buildListQuery = createOrderBuildListQuery.call(this)
+
+  this.loadList = SalesforceModelUtils.loadList.bind(this);
+  this.loadPage = SalesforceModelUtils.loadPage.bind(this);
+}])
+
+cartaFabrilFactories.factory("createOrderBuildListQuery", function createOrderBuildListQueryFactory() {
+  return function createOrderBuildListQuery() {
+    return function buildListQuery(filterParams) {
+      filterParams = filterParams || {}
+
+      return _.compact([
+        "SELECT",
+          "Id, AccountId, Account.Name, Account.nomeFantasia__c, OrderNumber, valorTotalSemImpostos__c, QuantidadeTotal__c,",
+          "QuantidadeTotalBonificada__c, CreatedDate, Status,",
+          "valorTotalBonusImpostos__c, valorTotalBonus__c, valorTotalImpostos__c,",
+          "percBonus__c, Cod_Cliente__c, loja__c, Loja_do_Cliente__c,",
+          "razaoSocial__c, NomeFantasia__c, tipoCliente__c, mensagemNf__c,",
+          "CNPJ__c, Estado__c , codigoRede__c, Rede__c, canalCliente__c,",
+          "condicaoPgto__r.Name, percDescFinanceiro__c, tipoFrete__c,",
+          "codGerenciaVendas__c,codigoVendedor__c, Vendedor_Representante__c,",
+          "nomeGerencia__c, supervisorVendas__c, dataEmissao__c, obsPedido__c,",
+          "numeroPedidoCliente__c, numeroPedidoClienteBon__c, expTransgressaoRegra__c, percTotalContrato__c,",
+          "custoDescargaFD__c, diferencaDescarga__c, custoDescargaPallet__c,",
+          "percOutrosCustosLogisticos__c, numeroAjudantes__c, tipoBloqueio__c,",
+          "custoAjudante__c, aceitaEntregaParcial__c, valorPedidoMinimo__c,",
+          "valorDuplicataMinima__c, motivoRejeicao__c, dataEntrega__c, id_protheus__c,",
+          "possuiCombo__c, combos__c, ", 
+          "(SELECT",
+            "PricebookEntry.Product2.Name, UnitPrice,",
+            "Quantity, descricaoProduto__c,",
+            "PricebookEntry.Product2.ProductCode, valorTotalBonus__c, valorTotalBonusImpostos__c,",
+            "ListPrice, percDesconto__c, qtdVenda__c, qtdBonificada__c, percBonificado__c,",
+            "percPoliticaCliente__c, valorDesconto__c, descontoMedio__c, percDescontoNf__c,",
+            "valorTotalItemSemImposto__c, valorTotalSemImpostos__c, valorTotalComImpostos__c ",
+            "FROM OrderItems",
+          ")",
+        "FROM " + this.objectName,
+        "WHERE Status != 'Liberado'",
+        (filterParams.orderNumber ? "AND OrderNumber LIKE '%" + filterParams.orderNumber + "%'" : ""),
+        (filterParams.startDate ? "AND CreatedDate >= " + filterParams.startDate.toISOString() : ""),
+        (filterParams.endDate ? "AND CreatedDate <= " + filterParams.endDate.toISOString() : ""),
+        (filterParams.clientId ? "AND " + this.userColumn + " = '" + filterParams.clientId + "'" : ""),
+        "ORDER BY CreatedDate desc, OrderNumber desc"
+      ]).join(" ")
+    }.bind(this)
+  };
+
+})
+
+cartaFabrilFactories.factory('OrderItem', ['ProxyDecorator', function (ProxyDecorator) {
+  return ProxyDecorator(function OrderItem(attributes) {
+    this.name = _.get(attributes, 'PricebookEntry.Product2.Name')
+    this.quantity = attributes.Quantity
+    this.code = _.get(attributes, 'PricebookEntry.Product2.ProductCode')
+    this.description = attributes.descricaoProduto__c
+    this.listPrice = attributes.ListPrice
+    this.discountPercent = attributes.percDescontoNf__c
+    this.saleQuantity = attributes.qtdVenda__c
+    this.bonusQuantity = attributes.qtdBonificada__c
+    this.bonusPercent = attributes.percBonificado__c
+    this.clientPolitcsPercent = attributes.percPoliticaCliente__c
+    this.discount = attributes.valorDesconto__c
+    this.averageDiscount = attributes.descontoMedio__c
+    this.totalAmmountWithTaxes = attributes.valorTotalComImpostos__c
+    this.totalAmmountWithoutTaxes = attributes.valorTotalSemImpostos__c
+    this.itemTotalAmountWithoutTaxes = attributes.valorTotalItemSemImposto__c
+
+    this.totalBonus = attributes.valorTotalBonus__c
+    this.totalBonusWithTaxes = attributes.valorTotalBonusImpostos__c
+
+    this.liquidPrice = attributes.UnitPrice
+  })
+}])
+
+cartaFabrilFactories.factory('Order', ['OrderItem', 'ProxyDecorator', function (OrderItem, ProxyDecorator) {
+  return ProxyDecorator(function Order(attributes) {
+    this.id = attributes.Id
+    this.accountName = _.get(attributes, 'Account.Name')
+    this.fantasyName = _.get(attributes, 'Account.nomeFantasia__c')
+    this.accountId = attributes.AccountId
+    this.date = attributes.CreatedDate || '__/__/____'
+    this.deliverDate = attributes.dataEntrega__c || '__/__/____'
+    this.status = attributes.Status
+    this.orderNumber = attributes.OrderNumber
+
+    this.possuiCombo = attributes.possuiCombo__c
+    this.allCombos = attributes.combos__c
+    
+    this.totalAmount = attributes.valorTotalSemImpostos__c
+    this.totalQuantity = attributes.QuantidadeTotal__c
+    this.totalSubsidized = attributes.QuantidadeTotalBonificada__c
+    this.totalAmountWithTaxes = attributes.valorTotalImpostos__c
+    this.totalBonus = attributes.valorTotalBonus__c
+    this.totalBonusWithTaxes = attributes.valorTotalBonusImpostos__c
+    this.percentBonus = attributes.percBonus__c
+    this.blockedBy = attributes.tipoBloqueio__c
+    this.clientCode = attributes.Cod_Cliente__c
+    this.store = attributes.loja__c
+    this.clientStore = attributes.Loja_do_Cliente__c
+    this.legalName = attributes.razaoSocial__c
+    this.fantasyName = attributes.NomeFantasia__c
+    this.clientType = attributes.tipoCliente__c
+    this.invoiceMessage = attributes.mensagemNf__c
+    this.cnpj = attributes.CNPJ__c
+    this.state = attributes.Estado__c
+    this.networkCode = attributes.codigoRede__c
+    this.network = attributes.Rede__c
+    this.clientChannel = attributes.canalCliente__c
+    this.paymentCondition = _.get(attributes, 'condicaoPgto__r.Name')
+    this.percentFinancialDiscount = attributes.percDescFinanceiro__c
+    this.freightType = attributes.tipoFrete__c
+    this.salerCode = attributes.codigoVendedor__c
+    this.salerName = attributes.Vendedor_Representante__c
+    this.managementCode = attributes.codGerenciaVendas__c
+    this.managementName = attributes.nomeGerencia__c
+    this.supervisor = attributes.supervisorVendas__c
+    this.createdDate = attributes.dataEmissao__c
+    this.orderNote = attributes.obsPedido__c
+    this.clientOrderNumber = attributes.numeroPedidoCliente__c
+    this.clientBonusOrderNumber = attributes.numeroPedidoClienteBon__c
+    this.ruleExceptionNote = attributes.expTransgressaoRegra__c
+    this.percentContract = attributes.percTotalContrato__c
+    this.costUnloadFD = attributes.custoDescargaFD__c
+    this.unloadDiff = attributes.diferencaDescarga__c
+    this.costUnloadPallet = attributes.custoDescargaPallet__c
+    this.percentOtherCosts = attributes.percOutrosCustosLogisticos__c
+    this.assistants = attributes.numeroAjudantes__c
+    this.costAssistant = attributes.custoAjudante__c
+    this.canPartialDelivery = attributes.aceitaEntregaParcial__c
+    this.minimumOrderValue = attributes.valorPedidoMinimo__c
+    this.minimumTradeBillValue = attributes.valorDuplicataMinima__c
+    this.rejectReason = attributes.motivoRejeicao__c
+    this.fromProtheus = !!attributes.id_protheus__c
+
+    this.products = _.chain(attributes)
+      .get("OrderItems.records", [])
+      .map(function (item) {
+        return OrderItem(item)
+      })
+      .value()
+
+  })
+}])

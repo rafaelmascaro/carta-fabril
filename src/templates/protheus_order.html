@@ -1,0 +1,126 @@
+<ion-modal-view class="detail-modal">
+  <ion-header-bar align-title="left">
+    <p class="title">{{ (order.protheusCode) | characters:35 }}</p>
+    <button class="button button-clone"
+        ng-if="!order.fromProtheus"
+        ng-click="cloneProtheusOrder(order.protheusCode)"
+    >CLONAR <i class="icon ion-fork-repo"></i></button>
+    <button class="button" ng-click="close()">FECHAR <i class="icon ion-ios-close-outline"></i></button>
+  </ion-header-bar>
+
+  <form name="form">
+    <ion-content class="padding">
+
+      <dl class="detail-items">
+        <dt>Número de pedido Sales Force</dt>
+        <dd>{{ order.originalOrder }}</dd>
+
+        <dt>Número do pedido do Cliente</dt>
+        <dd>{{ order.clientOrderNumber }}</dd>
+
+        <dt>Razão Social</dt>
+        <dd>{{ order.legalName }}</dd>
+
+        <dt>Nome Fantasia</dt>
+        <dd>{{ order.fantasyName }}</dd>
+
+        <dt>CNPJ</dt>
+        <dd>{{ order.cnpj }}</dd>
+
+        <dt>Nome da Rede</dt>
+        <dd>{{ order.network }}</dd>
+
+        <dt>Cód Vendedor</dt>
+        <dd>{{ order.salerCode }}</dd>
+
+        <dt>Vendedor</dt>
+        <dd>{{ order.salerName }}</dd>
+
+        <dt>Cond Pgto (pedido)</dt>
+        <dd>{{ order.paymentCondition }}</dd>
+
+        <dt>Tipo de Pedido</dt>
+        <dd>{{ order.orderType }}</dd>
+
+        <dt>Unidade de faturamento</dt>
+        <dd>{{ order.billingUnit }}</dd>
+
+        <dt>Tipo Frete</dt>
+        <dd>{{ order.freightType }}</dd>
+
+        <dt>Data de Entrega</dt>
+        <dd>{{ order.deliverDate | date:'dd/MM/yyyy' }}</dd>
+
+        <dt>Mensagem NF</dt>
+        <dd>{{ order.invoiceMessage }}</dd>
+
+        <dt>Observação Pedido</dt>
+        <dd>{{ order.orderNote }}</dd>
+
+        <dt>% Desconto Financeiro (concedido no pedido)</dt>
+        <dd>{{ order.percentFinancialDiscount }}</dd>
+
+        <dt>Quantidade Total</dt>
+        <dd>{{ order.quantity }}</dd>
+
+        <dt>Quantidade Faturada</dt>
+        <dd>{{ order.deliveredQuantity }}</dd>
+
+        <dt>Valor Total do Pedido s/ Impostos</dt>
+        <dd>{{ (order.totalAmount | currency:"R$ ") || 'Não Disponível' }}</dd>
+
+        <dt>Valor Total do Pedido c/ Impostos</dt>
+        <dd>{{ (order.totalAmountWithTaxes | currency:"R$ ") || 'Não Disponível' }}</dd>
+
+        <dt ng-if="order.blockedBy">Bloqueado por</dt>
+        <dd ng-if="order.blockedBy">{{ order.blockedBy || 'Não Disponível' }}</dd>
+
+        <dt ng-if="order.balance != 0">Status</dt>
+        <dd ng-if="order.balance != 0">{{ order.status }}</dd>
+
+        <dt>Possui Combos:</dt>
+        <dd>{{order.possuiCombo ? 'Sim' : 'Não' }}</dd>
+
+        <dt ng-if="order.possuiCombo">Combos:</dt>
+        <dd ng-if="order.possuiCombo && order.allCombos.split(';')[0]"> - {{order.allCombos.split(';')[0]}} <br /> </dd>
+        <dd ng-if="order.allCombos.split(';')[1]"> - {{order.allCombos.split(';')[1]}} <br /> </dd>
+        <dd ng-if="order.allCombos.split(';')[2]"> - {{order.allCombos.split(';')[2]}} <br /> </dd>
+        <dd ng-if="order.allCombos.split(';')[3]"> - {{order.allCombos.split(';')[3]}} <br /> </dd>
+        <dd ng-if="order.allCombos.split(';')[4]"> - {{order.allCombos.split(';')[4]}} <br /> </dd>
+        <dd ng-if="order.allCombos.split(';')[5]"> - {{order.allCombos.split(';')[5]}} <br /> </dd>
+        <dd ng-if="order.allCombos.split(';')[6]"> - {{order.allCombos.split(';')[6]}} <br /> </dd>
+        <dd ng-if="order.allCombos.split(';')[7]"> - {{order.allCombos.split(';')[7]}} <br /> </dd>
+        <dd ng-if="order.allCombos.split(';')[8]"> - {{order.allCombos.split(';')[8]}} <br /> </dd>
+
+        <dt>Produtos</dt>
+        <dd ng-if="order.products.length">
+          <ul class="inner-list">
+            <li ng-repeat="product in order.products track by $index">
+              <h4 class="inner-list-title">{{ product.code }}</h4>
+              <dl>
+
+                <dd>{{ product.description }}</dd>
+                
+                <dt>Quantidade</dt>
+                <dd>{{ product.quantity }}</dd>
+
+                <dt>Quantidade Faturada</dt>
+                <dd>{{ product.deliveredQuantity }}</dd>
+
+                <dt>Preço Líquido s/ Impostos</dt>
+                <dd>{{ product.liquidPrice }}</dd>
+
+                <dt>Subtotal s/ Impostos</dt>
+                <dd>{{ (product.totalAmountWithoutTaxes | currency:"R$ ") || 'Não Disponível' }}</dd>
+
+                <dt>Subtotal c/ Impostos</dt>
+                <dd>{{ (product.totalAmountWithTaxes | currency:"R$ ") || 'Não Disponível' }}</dd>
+              </dl>
+            </li>
+          </ul>
+        </dd>
+      </dl>
+
+    </ion-content>
+  </form>
+</ion-modal-view>

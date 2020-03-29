@@ -1,0 +1,12 @@
+{
+  "env": "development",
+  "appName": "Carta Fabril Dev Local",
+  "appId": "br.com.carta_fabril.dev",
+  "sfClientId": "3MVG9Yb5IgqnkB4o6._ehmPPF7kN3ORf9RkdbRxCWqGEKUFr3v1YKNkyFmQEPhdktkBZPn9Y..C2BnA42cb0T",
+  "sfClientSecret": "FA52751674CAB108CD2D21DC1090B4A1344B4A9ED493E446236336F5DC73A8E6",
+  "sfOauthUrl": "https://test.salesforce.com/",
+  "sfPartnerOauthUrl": "https://sfhlg-portaldevendascartafabril.cs95.force.com/representantes/",
+  "sfRedirectUri": "https://localhost/from_salesforce",
+  "gmapsApiKey": "AIzaSyCLWbpUqdb2tdco8Q5dOs98TSqWdO4utEE",
+  "destination": "web"
+}

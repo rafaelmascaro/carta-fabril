@@ -1,0 +1,45 @@
+.visit-registrations {
+  .padding {
+    padding: 15px 15px 15px 15px;
+  }
+
+  h1.section-header {
+    color: #000;
+    font-size: 25px;
+    font-weight: lighter;
+    margin-bottom: 5px;
+    padding-bottom: 3px;
+  }
+
+  p.meta {
+    font-style: italic;
+    font-size: 12px;
+  }
+
+  .list-header {
+    margin-top: 0;
+    padding: 5px 0;
+  }
+
+  .item {
+    padding: 16px 0px 16px 0px;
+    border-style: dotted;
+    border-width: 0px 0px 2px 0px;
+
+    &:hover {
+      background-color: rgba(127, 127, 127, 0.1);
+    }
+
+    p {
+      font-weight: lighter;
+      white-space: normal;
+    }
+
+    i.icon {
+      position: relative;
+      display: inline-block;
+      font-size: 14px;
+      color: #00a88a;
+    }
+  }
+}

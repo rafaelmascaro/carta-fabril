@@ -1,0 +1,26 @@
+<ion-view cache-view="false">
+    <ion-nav-title>Planejamentos de Visita</ion-nav-title>
+    <ion-nav-buttons side="right" class="client-bar-buttons">
+        <div class="button button-balanced" ng-click="newPlanning()">
+            Novo Planejamento
+        </div>
+    </ion-nav-buttons>    
+    <ion-content padding="true" class="visit-plannings">
+      <div>
+        <div class="empty-list-msg" ng-if="!visitPlannings.length">Você ainda não possui registros de planejamentos</div>
+        <ul>
+          <li class="item" ng-click="open(visitPlanning.DataDaVisita, visitPlanning.IdVendedor)"  ng-repeat="visitPlanning in visitPlannings">
+            <div class="gray-bar">
+              <h2>Planejamento</h2>
+              <p>Data: {{visitPlanning.DataDaVisita | date:'dd/MM/yyyy'}}</p>
+              <p class="observation">{{visitPlanning.NomeDoVendedor}}</p>
+            </div>
+            <p class="observation">Quantidade de Clientes: {{visitPlanning.QuantidadeClientes}}</p>
+            <p class="observation">Visitas Realizadas: {{visitPlanning.VisitasRealizadas}}</p>
+            <p class="observation">Visitas Não Realizadas: {{visitPlanning.VisitasNaoRealizadas}}</p>
+            <p class="observation">Visitas Não Planejadas: {{visitPlanning.VisitasNaoPlanejadas}}</p>
+          </li>
+        </ul>
+      </div>
+    </ion-content>
+</ion-view>

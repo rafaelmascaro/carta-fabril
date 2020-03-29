@@ -1,0 +1,165 @@
+<ion-modal-view class="detail-modal">
+  <ion-header-bar align-title="left">
+    <p class="title">{{ (order.orderNumber) | characters:35 }}</p>
+    <button class="button button-clone"
+        ng-if="!order.fromProtheus"
+        ng-click="cloneOrder(order.id)"
+    >CLONAR <i class="icon ion-fork-repo"></i></button>
+    <button class="button" ng-click="close()">FECHAR <i class="icon ion-ios-close-outline"></i></button>
+  </ion-header-bar>
+
+  <form name="form">
+    <ion-content class="padding">
+
+      <dl class="detail-items">
+
+        <dt>Data de Envio</dt>
+        <dd>{{ order.date | date:'dd/MM/yyyy' }}</dd>
+
+        <dt>Data de Entrega</dt>
+        <dd>{{ order.deliverDate | date:'dd/MM/yyyy' }}</dd>
+
+        <dt>Número do Pedido do Cliente</dt>
+        <dd>{{ order.clientOrderNumber }}</dd>
+
+        <dt>Número do Pedido do Cliente Bonificado</dt>
+        <dd>{{ order.clientBonusOrderNumber }}</dd>
+
+        <dt>Razão Social</dt>
+        <dd>{{ order.accountName }}</dd>
+
+        <dt>Nome Fantasia</dt>
+        <dd>{{ order.fantasyName }}</dd>
+
+        <dt>CNPJ</dt>
+        <dd>{{ order.cnpj }}</dd>
+
+        <dt>Código Cliente</dt>
+        <dd>{{ order.clientCode }}</dd>
+
+        <dt>Loja</dt>
+        <dd>{{ order.store }}</dd>
+
+        <dt>Loja Cliente</dt>
+        <dd>{{ order.clientStore }}</dd>
+
+        <dt>Cód Vendedor</dt>
+        <dd>{{ order.salerCode }}</dd>
+
+        <dt>Vendedor</dt>
+        <dd>{{ order.salerName }}</dd>
+
+        <dt>Estado</dt>
+        <dd>{{ order.state }}</dd>
+
+        <dt>Nome da Rede</dt>
+        <dd>{{ order.network }}</dd>
+
+        <dt>Condição de Pagamento</dt>
+        <dd>{{ order.paymentCondition }}</dd>
+
+        <dt>% Desconto Financeiro</dt>
+        <dd>{{ order.percentFinancialDiscount }}</dd>
+
+        <dt>% Total Contrato</dt>
+        <dd>{{ order.percentContract }}</dd>
+
+        <dt>Aceita Entrega Parcial</dt>
+        <dd>{{ order.canPartialDelivery | yesOrNo }}</dd>
+
+        <dt>Mensagem da Nota Fiscal</dt>
+        <dd>{{ order.invoiceMessage }}</dd>
+
+        <dt>Observação Pedido</dt>
+        <dd>{{ order.orderNote }}</dd>
+
+        <dt>Valor Pedido Mínimo</dt>
+        <dd>{{ (order.minimumOrderValue | currency:"R$ ") || 'Não Disponível' }}</dd>
+
+        <dt>Valor Duplicata Mínima</dt>
+        <dd>{{ (order.minimumTradeBillValue | currency:"R$ ") || 'Não Disponível' }}</dd>
+
+        <dt>Valor Total Venda s/ Impostos</dt>
+        <dd>{{ (order.totalAmount | currency:"R$ ") || 'Não Disponível' }}</dd>
+
+        <dt>Valor Total Venda c/ Impostos</dt>
+        <dd>{{ (order.totalAmountWithTaxes | currency:"R$ ") || 'Não Disponível' }}</dd>
+
+        <dt>Valor Total Bonus s/ Impostos</dt>
+        <dd>{{ (order.totalBonus | currency:"R$ ") || 'Não Disponível' }}</dd>
+
+        <dt>Valor Total Bonus c/ Impostos</dt>
+        <dd>{{ (order.totalBonusWithTaxes | currency:"R$ ") || 'Não Disponível' }}</dd>
+
+        <dt>% Bonus sobre Venda</dt>
+        <dd>{{ order.percentBonus }}%</dd>
+
+        <dt>Bloqueado por</dt>
+        <dd>{{ order.blockedBy }}</dd>
+
+        <dt>Status</dt>
+        <dd>{{ order.status }}</dd>
+
+        <dt ng-if="(order.status == 'Reprovado' || order.status == 'Rejeitado') && (order.rejectReason != '' || order.rejectReason != 'Não Disponível')">Motivo da {{ order.status == 'Reprovado' ? 'Reprovação' : 'Rejeição' }}</dt>
+        <dd ng-if="(order.status == 'Reprovado' || order.status == 'Rejeitado') && (order.rejectReason != '' || order.rejectReason != 'Não Disponível')">{{ order.rejectReason }}</dd>
+
+        <dt>Produtos</dt>
+        <dd>
+          <ul class="inner-list">
+            <li ng-repeat="product in order.products track by $index">
+              <h4 class="inner-list-title">{{ product.code }}</h4>
+              <dl>
+
+                <dd>{{ product.description }}</dd>
+
+                <dt>Código do Produto</dt>
+                <dd>{{ product.code }}</dd>
+
+                <dt>Quantidade Venda</dt>
+                <dd>{{ product.saleQuantity }}</dd>
+
+                <dt>Quantidade Bonus</dt>
+                <dd>{{ product.bonusQuantity }}</dd>
+
+                <dt>Preço Lista</dt>
+                <dd>{{ (product.listPrice | currency:"R$ ") || 'Não Disponível' }}</dd>
+
+                <dt>% Desconto</dt>
+                <dd>{{ product.discountPercent }}%</dd>
+
+                <dt>Preço Líquido</dt>
+                <dd>{{ (product.liquidPrice | currency:"R$ ") || 'Não Disponível' }}</dd>
+
+                <dt>% Bonus</dt>
+                <dd>{{ product.bonusPercent }}%</dd>
+
+                <dt>Preço Líquido Final</dt>
+                <dd>{{ (product.itemTotalAmountWithoutTaxes | currency:"R$ ") || 'Não Disponível' }}</dd>
+
+                <dt>% Desconto Médio</dt>
+                <dd>{{ product.averageDiscount }}%</dd>
+
+                <dt>% Política Cliente</dt>
+                <dd>{{ product.clientPolitcsPercent }}%</dd>
+
+                <dt>Subtotal Venda s/ Impostos</dt>
+                <dd>{{ (product.totalAmmountWithoutTaxes | currency:"R$ ") || 'Não Disponível' }}</dd>
+
+                <dt>Subtotal Venda c/ Impostos</dt>
+                <dd>{{ (product.totalAmmountWithTaxes | currency:"R$ ") || 'Não Disponível' }}</dd>
+
+                <dt>Subtotal Bônus s/ Impostos</dt>
+                <dd>{{ (product.totalBonus | currency:"R$ ") || 'Não Disponível' }}</dd>
+
+                <dt>Subtotal Bônus c/ Impostos</dt>
+                <dd>{{ (product.totalBonusWithTaxes | currency:"R$ ") || 'Não Disponível' }}</dd>
+
+              </dl>
+            </li>
+          </ul>
+        </dd>
+      </dl>
+
+    </ion-content>
+  </form>
+</ion-modal-view>

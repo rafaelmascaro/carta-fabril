@@ -1,0 +1,15 @@
+{
+  "name": "carta-fabril-app",
+  "integrations": {
+    "cordova": {},
+    "gulp": {}
+  },
+  "type": "ionic1",
+  "documentRoot": "www",
+  "watchPatterns": [
+    "www/**/*"
+  ],
+  "pro_id": "cc58da8c",
+  "id": "cc58da8c",
+  "app_id": ""
+}

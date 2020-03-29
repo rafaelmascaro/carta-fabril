@@ -1,0 +1,27 @@
+.dashboard-buttons {
+  padding: 5px 0;
+  text-align: center;
+
+  .col {
+    margin: auto;
+  }
+}
+
+.fake-dashboard {
+  img {
+    width: 100%;
+  }
+}
+
+.recent-orders {
+
+  height: 150px;
+  white-space: nowrap;
+  overflow-x: scroll;
+
+  .card {
+    display: inline-block;
+    width: 200px;
+    margin: 1px 3px 1px 3px;
+  }
+}

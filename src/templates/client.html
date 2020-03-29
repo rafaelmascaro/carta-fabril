@@ -1,0 +1,27 @@
+<ion-view cache-view="false">
+  <ion-tabs class="tabs-client">
+    <ion-tab badge="overviewBadge && '&nbsp;'" badge-style="assertive" icon-on="ion-ios-world" icon-off="ion-ios-world" href="#/client/{{clientId}}/overview">
+      <ion-nav-view name="tab-overview"></ion-nav-view>
+    </ion-tab>
+
+    <ion-tab icon-on="ion-ios-copy-outline" icon-off="ion-ios-copy-outline" href="#/client/{{clientId}}/order-history">
+      <ion-nav-view name="tab-order-history"></ion-nav-view>
+    </ion-tab>
+
+    <ion-tab icon="icon-fa-notafiscal" href="#/client/{{clientId}}/invoices">
+      <ion-nav-view name="tab-invoices"></ion-nav-view>
+    </ion-tab>
+
+    <ion-tab badge="devolutionsBadge && '&nbsp;'" badge-style="assertive" icon-on="ion-arrow-return-left" icon-off="ion-arrow-return-left" href="#/client/{{clientId}}/devolutions">
+      <ion-nav-view name="tab-devolutions"></ion-nav-view>
+    </ion-tab>
+
+    <ion-tab badge="delinquenciesBadge && '&nbsp;'" badge-style="assertive" icon-on="ion-cash" icon-off="ion-cash" href="#/client/{{clientId}}/delinquencies">
+      <ion-nav-view name="tab-delinquencies"></ion-nav-view>
+    </ion-tab>
+
+    <ion-tab icon="ion-ios-compose" href="#/client/{{clientId}}/visit-registrations">
+      <ion-nav-view name="tab-visit-registrations"></ion-nav-view>
+    </ion-tab>
+  </ion-tabs>
+</ion-view>

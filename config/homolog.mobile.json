@@ -1,0 +1,12 @@
+{
+  "env": "homolog",
+  "appName": "Carta Fabril Homolog",
+  "appId": "br.com.carta_fabril.homolog",
+  "sfClientId": "3MVG9Yb5IgqnkB4qIBUG7lt8Fq2B1xnx7jDY.Pxj14m08qH.XMfJcnPg_fzJdDJTkCioF_a21v_HXwlWiqha0",
+  "sfClientSecret": "2038343683045619489",
+  "sfOauthUrl": "https://test.salesforce.com/",
+  "sfPartnerOauthUrl": "https://sfhlg-portaldevendascartafabril.cs95.force.com/representantes/",
+  "sfRedirectUri": "cartafabril://from_salesforce",
+  "gmapsApiKey": "AIzaSyCLWbpUqdb2tdco8Q5dOs98TSqWdO4utEE",
+  "destination": "mobile"
+}

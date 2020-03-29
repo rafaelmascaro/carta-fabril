@@ -1,0 +1,52 @@
+<ion-modal-view class="new-visit-registration">
+  <ion-header-bar align-title="left">
+    <p class="title"><i class="ion-location"></i>Registro de Visita</p>
+    <button class="button" ng-click="close()">CANCELAR <i class="icon ion-ios-close-outline"></i></button>
+  </ion-header-bar>
+
+  <form name="form">
+    <ion-content class="padding">
+        <div class="input-group">
+          <p>Data da Visita</p>
+          <p>{{ now | date:'dd/MM/yyyy' }}</p>
+        </div>
+
+        <div class="input-group">
+          <label for="category" class="item item-input item-select">
+            <div class="input-label">Categoria*</div>
+
+            <select name="category" id="category" ng-options="option.label for option in categories track by option.value" ng-model="visitRegistration.category" required></select>
+          </label>
+        </div>
+
+        <div class="input-group">
+          <textarea placeholder="Observações*" name="observations" class="input-control text" ng-model="visitRegistration.observations" required>
+          </textarea>
+        </div>
+
+        <div class="input-group" ng-if="onMobile">
+          <button class="button button-full picture" ng-click="getPhoto()">
+            <i class="left icon ion-camera"></i>
+            {{ images.length ? 'Anexar outra foto' : 'Anexar foto' }}
+          </button>
+        </div>
+
+        <ul ng-if="onMobile && images.length" class="">
+          <li ng-repeat="image in images track by $index" class="card item item-image">
+            <img ng-src="data:image/jpeg;base64, {{image}}">
+
+            <a class="item item-icon-left assertive" href="#" ng-click="removeImage($index)">
+              <i class="icon ion-close-round"></i> Remover Foto
+            </a>
+          </li>
+        </ul>
+
+    </ion-content>
+
+    <ion-footer-bar>
+      <button class="button pull-right" ng-click="save(form)" ng-class="{ 'disabled': form.$invalid  }">
+        Salvar registro
+      </button>
+    </ion-footer-bar>
+  </form>
+</ion-modal-view>

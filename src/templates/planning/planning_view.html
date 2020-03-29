@@ -1,0 +1,41 @@
+<ion-view>
+        <ion-nav-title>
+            <p>Planejamento {{ planningDate | date: 'dd/MM/yyyy'}}</p>
+        </ion-nav-title>
+        <ion-nav-buttons side="right">
+            <div class="button button-balanced draft" ng-show="visitPlanningService.newVisitEnabled && visitPlanningService.planningFinished" ng-click="newVisit()">Nova Visita</div>
+        </ion-nav-buttons>        
+        <ion-content padding="true" class="clients has-subheader view-has-subheader">
+            <div class="row">
+                <div class="col" ng-show="visitPlanningService.planningEnabled && !visitPlanningService.planningFinished">
+                    <button class="button button-balanced" style="width:100%;" ng-click="edit()" >
+                        <i class="fa fa-edit"></i>
+                        Editar
+                    </button>
+                </div>
+                
+                <div class="col">
+                    <button class="button button-balanced" style="width:100%;" ng-click="finish()" ng-show="visitPlanningService.newVisitEnabled && !visitPlanningService.planningFinished">
+                        <i class="fa fa-paper-plane-o"></i>
+                        Finalizar
+                    </button>
+                </div>
+            </div>            
+            <ul class="list list-header">
+                <li class="item" ng-click="openClient(client.contaId__c)" ng-repeat="client in visitPlanningService.cacheViewPlanning as filteredValue track by client.Id">
+                    <h2> {{::client.contaId__r.nomeFantasia__c}}</h2>
+                    <p><strong>Razão social:</strong> {{::client.contaId__r.Name}}</p>
+                    <p><strong>Código e loja:</strong> {{::client.codigoCliente__c}}-{{::client.loja__c}}</p>
+                    <p><strong>Loja do cliente:</strong> {{::client.contaId__r.lojaCliente__c}}</p>
+                    <p><strong>CNPJ: </strong>{{::client.contaId__r.cnpjCpf__c}}</p>
+                    <p><strong>Cód. Vendedor</strong> {{::client.contaId__r.vendedorRepresentante__r.codigo__c}}</p>
+                    <p><strong>Vendedor</strong> {{::client.contaId__r.vendedorRepresentante__r.Name}}</p>
+                    <p><strong>Ultíma Positivação:</strong> {{::client.contaId__r.DataUltimaPositivacao__c | date:'dd/MM/yyyy'}}</p>
+                    <p ng-show="client.Sequencia__c != 999"><strong>Sequencia:</strong> {{client.Sequencia__c}}</p>
+                    <p ng-show="client.Sequencia__c == 999"><strong>Não Planejado</strong></p>
+                    <p ng-if="client.contaId__r.tipoCadastro__c=='Merchan'"><strong>Tipo de Visita:</strong> Merchan</p>
+                    <p ng-if="client.contaId__r.tipoCadastro__c!='Merchan'"><strong>Tipo de Visita:</strong> {{client.TipoDaVisita__c}}</p>
+                </li>
+            </ul>
+        </ion-content>    
+    </ion-view>

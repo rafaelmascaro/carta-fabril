@@ -1,0 +1,64 @@
+<ion-modal-view class="filter">
+  <ion-header-bar align-title="left">
+    <p class="title"><i class="fa fa-filter"></i>Filtrar {{::filterName}}</p>
+    <button class="button" ng-click="close()">FECHAR <i class="icon ion-ios-close-outline"></i></button>
+  </ion-header-bar>
+
+  <ion-content class="padding">
+    <form class="filter-form">
+      <div class="row">
+        <div class="col input-group">
+          <label for="filter-order-number">Número da Nota Fiscal</label>
+          <input id="filter-order-number" class="input-control" type="tel" ng-model="currentSearchParams.invoiceNumber" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col col-50 input-group">
+          <label for="filter-start-date">De</label>
+          <div class="input-group-spanned">
+            <input id="filter-start-date"
+                     class="input-control"
+                     type="text"
+                     uib-datepicker-popup="dd/MM/yyyy"
+                     show-button-bar="false"
+                     datepicker-options="startDatepicker.options"
+                     is-open="startDatepicker.opened"
+                     ng-model="currentSearchParams.startDate"
+                     ng-change="setMinEndDate()" />
+            <span class="input-group-addon" ng-click="startDatepicker.toggleOpened()">
+              <i class="fa fa-calendar"></i>
+            </span>
+          </div>
+        </div>
+
+        <div class="col col-50 input-group">
+          <label for="filter-end-date">Até</label>
+          <div class="input-group-spanned">
+            <input id="filter-end-date"
+                     class="input-control"
+                     type="text"
+                     uib-datepicker-popup="dd/MM/yyyy"
+                     show-button-bar="false"
+                     datepicker-options="endDatepicker.options"
+                     is-open="endDatepicker.opened"
+                     ng-model="currentSearchParams.endDate"
+                     ng-change="setMaxStartDate()" />
+            <span class="input-group-addon" ng-click="endDatepicker.toggleOpened()">
+              <i class="fa fa-calendar"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </form>
+  </ion-content>
+
+  <ion-footer-bar>
+    <button class="button reset" ng-click="resetFilter()">
+      <i class="fa fa-trash-o"></i> Limpar filtro
+    </button>
+    <button class="button filter" ng-click="filter()">
+      <i class="fa fa-filter"></i> Filtrar {{::filterName}}
+    </button>
+  </ion-footer-bar>
+</ion-modal-view>

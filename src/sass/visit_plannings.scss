@@ -1,0 +1,179 @@
+.visit-plannings {
+    .padding {
+      padding: 15px 15px 15px 15px;
+    }
+  
+    h1.section-header {
+      color: #000;
+      font-size: 25px;
+      font-weight: lighter;
+      margin-bottom: 5px;
+      padding-bottom: 3px;
+    }
+
+    p.meta {
+      font-style: italic;
+      font-size: 12px;
+    }
+  
+    .list-header {
+      margin-top: 0;
+      padding: 5px 0;
+    }
+  
+    .item {
+      padding: 16px 0px 16px 0px;
+      border-style: dotted;
+      border-width: 0px 0px 2px 0px;
+  
+      &:hover {
+        background-color: rgba(127, 127, 127, 0.1);
+      }
+  
+      p {
+        font-weight: normal;
+        white-space: normal;
+        color: #000;
+        padding-left: 10px;
+        font-size: 10px;        
+      }
+
+      .gray-bar {
+        background-color: #eee;
+        padding: 10px;
+        margin-bottom: 10px;
+
+        p {
+            font-weight: lighter;            
+            padding-left: 0px;
+            font-size: 12px;               
+          }
+      }      
+
+      i.icon {
+        position: relative;
+        display: inline-block;
+        font-size: 14px;
+        color: #00a88a;
+      }
+    }
+}
+
+.new-visit-registration{
+  textarea {
+    height: 200px !important;
+  }
+}
+
+.planning-has-subheader {
+  top: 160px !important;
+}
+
+.ordering-has-subheader {
+  top: 110px !important;
+}
+  
+.item-planning {  
+  &:hover {
+    background-color: transparent !important;
+  }  
+}
+
+.view-has-subheader {
+  top: 60px !important;
+}  
+
+.plan-date {
+
+  padding-top: 25px;
+  padding-left: 15px;
+
+  h5 {
+    color: red;
+  }
+
+  .input-group, .input-group-spanned {
+    display: table;
+    margin-bottom: 15px;
+    position: relative;
+    border-collapse: separate;
+    box-sizing: border-box;
+    padding: 0 5px 0 0;
+
+    label {
+      display: inline-block;
+      max-width: 100%;
+      margin-bottom: 5px;
+    }
+
+    &.exception {
+      color: #ce4400;
+
+      .input-control {
+        color: #ce4400;
+        border: 1px solid #ff8400;
+      }
+
+      .input-group-addon {
+        color: #ce4400;
+        border: 1px solid #ff8400;
+      }
+    }
+  }
+  
+  .input-group-spanned {
+    margin-bottom: 0;
+    padding: 0;
+
+    input:first-child {
+      border-radius: 5px 0 0 5px;
+    }
+
+    input:last-child {
+      border-radius: 0 5px 5px 0;
+    }
+  }
+
+  .input-control {
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    color: #555;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+
+    &.text {
+      height: 68px;
+    }
+  }
+
+  .input-group-addon {
+    padding: 0 12px 0 12px;
+    font-size: 14px;
+    color: #555;
+    text-align: center;
+    background-color: #fafafa;
+    border: 1px solid #ccc;
+    border-radius: 0;
+
+    width: 1%;
+    white-space: nowrap;
+    vertical-align: middle;
+
+    display: table-cell;
+
+    box-sizing: border-box;
+
+    &:first-child {
+      border-right: 0;
+      border-radius: 5px 0 0 5px;
+    }
+
+    &:last-child {
+      border-left: 0;
+      border-radius: 0 5px 5px 0;
+    }
+  }  
+}

@@ -1,0 +1,48 @@
+<ion-view cache-view="false">
+  <ion-nav-title> Produtos </ion-nav-title>
+
+  <div class="bar-subheader item-input clients-search-bar">
+    <div class="item-input-wrapper">
+      <i class="icon ion-ios-search placeholder-icon"></i>
+      <input type="search" class="input-search" placeholder="Busca" ng-model="query.term" />
+
+      <i class="fa fa-times-circle" ng-click="query.term = '' "></i>
+    </div>
+  </div>
+
+  <ion-content padding="true" class="products has-subheader">
+
+	<ion-refresher on-refresh="doRefresh()"></ion-refresher>
+
+    <div class="category-container" ng-repeat="group in productsByCategory" ng-show="filteredProduct.length > 0">
+      <h1 ng-click="toggleCategory(group[0])">
+        {{ group[0] }}
+        <i ng-class="{ 'ion-chevron-up': !isOppened(group[0]), 'ion-chevron-down': isOppened(group[0]) }"></i>
+      </h1>
+
+      <ul ng-class="{ 'closed': isOppened(group[0]) }">
+        <li ng-click="open(product.id)" ng-repeat="product in group[1] | filter:query.term as filteredProduct track by product.id">
+          <span class="image">
+            <img ng-src="{{product.imageURL.trim() || 'img/product-placeholder.png' }}"></img>
+          </span>
+
+          <span class="text">
+            <p class="description">
+              {{ product.field1 }} {{ product.field2 }}
+            </p>
+
+            <p class="code">
+              {{ product.field3 }}
+            </p>
+          </span>
+        </li>
+      </ul>
+    </div>
+    <div ng-if="!isLastPage">
+      <button
+        class="button button-load-more button-block"
+        ng-click="getMore()"
+      >CARREGAR MAIS</button>
+    </div>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,87 @@
+@import variables
+
+$light-gray: #fafafa
+
+.modal.filter
+  top: 25%
+  right: 5%
+  bottom: 25%
+  left: 5%
+  min-height: 385px
+  width: 90%
+  border-radius: 2px
+  font-family: $font-opensans-regular
+
+  .bar
+    background-color: $light-gray
+
+    &.bar-header
+      height: 45px
+      color: #004270
+
+      .fa-filter
+        font-size: 23px
+        margin-right: 12px
+        vertical-align: middle
+
+      .button
+        background-color: $light-gray
+        color: #e20000
+        font-size: 11px
+
+        .fa
+          font-size: 25px
+
+    &.bar-footer
+      height: 54px
+      background-color: $light-gray
+
+      .button
+        color: #fff
+        width: 48%
+
+        &.filter
+          background-color: #0083b4
+
+        &.reset
+          background-color: #9e9e9e
+
+  .input-group
+    margin-bottom: 15px
+    padding: 0
+    padding-right: 5px
+
+    &:last-child
+      padding-right: 0
+
+    label
+      display: inline-block
+      margin-bottom: 5px
+
+  .input-group-spanned
+    display: table
+
+    input:first-child, .input-group-addon:first-child
+      border-radius: 5px 0 0 5px
+
+    input:last-child, .input-group-addon:last-child
+      border-radius: 0 5px 5px 0
+
+    & .input-group-addon
+      display: table-cell
+      border: 1px solid #ccc
+      padding: 0 12px
+      background-color: $light-gray
+      width: 1%
+      vertical-align: middle
+
+  .input-control
+    width: 100%
+    padding: 6px 12px
+    color: #555
+    background-color: #fff
+    border: 1px solid #ccc
+
+    &.ng-invalid
+      color: #ce4400
+      border: 1px solid #ff8400

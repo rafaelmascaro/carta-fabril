@@ -1,0 +1,43 @@
+<ion-modal-view class="new-planning-date">
+    <ion-header-bar align-title="left">
+        <p class="title">Novo Planejamento</p>
+        <button class="button" ng-click="close()">Fechar <i class="icon ion-ios-close-outline"></i></button>
+    </ion-header-bar>
+
+    <form name="form">
+        <ion-content padding="true" class="plan-date">
+            <div class="row">
+                <div class="col col-50 input-group">
+                    <label for="plann-date">Data Planejamento</label>
+                    <div class="input-group-spanned">
+                        <input id="plann-date"
+                                readonly="readonly" 
+                                class="input-control"
+                                type="text"
+                                uib-datepicker-popup="dd/MM/yyyy"
+                                show-button-bar="false"
+                                datepicker-options="planDatepicker.options"
+                                is-open="planDatepicker.opened"
+                                ng-model="planDate.date"
+                                ng-change="checkException()"/>
+
+                        <span class="input-group-addon" ng-click="planDatepicker.toggleOpened()">
+                            <i class="fa fa-calendar"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <h5>{{dateException.Error}}</h5>
+            </div>
+        </ion-content>
+
+        <ion-footer-bar>
+            <button class="button pull-right" ng-click="confirmDate(form)" ng-class="{ 'disabled': form.$invalid  }">
+                Planejar
+            </button>
+        </ion-footer-bar>
+    </form>
+</ion-modal-view>
+        

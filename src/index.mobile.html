@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'; img-src * data: 'unsafe-inline'; connect-src * 'unsafe-inline'; frame-src *;">
+
+    <title>Carta Fabril</title>
+
+    <!-- inject:css -->
+    <!-- endinject -->
+
+  </head>
+  <body ng-app="cartaFabril" ng-cloak>
+    <ion-content ng-controller="MenuController">
+      <!-- main content -->
+      <div>
+        <ion-side-menus enable-menu-with-back-views="true">
+          <!-- left content -->
+          <ion-side-menu side="left">
+            <ion-content scroll="false" class="app-menu">
+
+              <div class="menu-logo">
+                <div class="cf-logo">
+                  <img src="img/marca-carta-fabril-menu.png">
+                </div>
+                <div style="text-align:center;color:#fff">{{ env }}v. {{ version }}</div>
+              </div>
+
+
+              <ion-list>
+                <ion-item menu-close href="#/">
+                  <div class="menu-icon">
+                    <i class="fa fa-home fa-2x"></i>
+                  </div>
+
+                  Início
+                </ion-item>
+
+                <ion-item menu-close href="#/clients">
+                  <div class="menu-icon">
+                    <i class="fa fa-users fa-2x"></i>
+                  </div>
+
+                  Clientes & Pedidos
+                </ion-item>
+
+                <ion-item menu-close href="#/orders">
+                  <div class="menu-icon">
+                    <i class="fa fa-file-o fa-2x"></i>
+                  </div>
+
+                  Histórico de pedidos
+                </ion-item>
+
+                <ion-item menu-close href="#/visit-Plannings">
+                  <div class="menu-icon">
+                    <i class="fa fa-bell fa-2x"></i>
+                  </div>
+
+                  Planejamentos de Visita
+                </ion-item>
+
+                <ion-item menu-close href="#/products">
+                  <div class="menu-icon">
+                    <i class="fa fa-cubes fa-2x"></i>
+                  </div>
+
+                  Produtos
+                </ion-item>
+
+                <ion-item menu-close href="#/informations">
+                  <div class="menu-icon">
+                    <i class="fa fa-info-circle fa-2x"></i>
+                  </div>
+
+                  Informações Gerais
+                </ion-item>
+
+                <ion-item menu-close ng-click="logout()">
+                  <div class="menu-icon">
+                    <i class="fa fa-sign-out fa-2x"></i>
+                  </div>
+
+                  Sair
+                </ion-item>
+              </ion-list>
+
+            </ion-content>
+          </ion-side-menu>
+
+          <ion-side-menu-content>
+            <ion-nav-bar class="bar bar-cf">
+              <ion-nav-buttons side="left">
+                <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+              </ion-nav-buttons>
+            </ion-nav-bar>
+
+            <ion-nav-view/>
+          </ion-side-menu-content>
+          
+        </ion-side-menus>
+      </div>
+      <!-- end main content -->
+      <script src="cordova.js"></script>
+
+      <!-- inject:js -->
+      <!-- endinject -->
+    </ion-content>
+  </body>
+</html>

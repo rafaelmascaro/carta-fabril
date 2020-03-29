@@ -1,0 +1,5 @@
+<p><strong>{{::unity.name}}</strong> {{::cnpj}}</p>
+<p ng-if="unity.stateInscription">Inscrição Estadual: {{::unity.stateInscription}}</p>
+<p ng-repeat="addressLine in addressLines">{{::addressLine}}</p>
+<p>CEP: {{::unity.cep}}</p>
+<cf-phone label="Tel." number="unity.phone"></cf-phone>

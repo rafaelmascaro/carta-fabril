@@ -1,0 +1,83 @@
+<ion-modal-view class="detail-modal">
+  <ion-header-bar align-title="left">
+    <p class="title">{{ devolution.name | characters:35 }}</p>
+    <button class="button" ng-click="close()">FECHAR <i class="icon ion-ios-close-outline"></i></button>
+  </ion-header-bar>
+
+  <form name="form">
+    <ion-content class="padding">
+      <dl class="detail-items">
+
+        <dt>Razão Social</dt>
+        <dd>{{ devolution.clientName }}</dd>
+
+        <dt>Número da Nota de Devolução</dt>
+        <dd>{{ devolution.returnedInvoice }}</dd>
+
+        <dt>Série da Nota de Devolução</dt>
+        <dd>{{ devolution.returnedInvoiceSerialNumber }}</dd>
+
+        <dt>Emissão da Nota de Devolução</dt>
+        <dd>{{ devolution.returnedInvoiceDate | date:'dd/MM/yyyy' }}</dd>
+
+        <dt>Número da Nota de Origem</dt>
+        <dd>{{ devolution.originalInvoice }}</dd>
+
+        <dt>Série da Nota de Origem</dt>
+        <dd>{{ devolution.originalInvoiceSerialNumber }}</dd>
+
+        <dt>Emissão da Nota de Origem</dt>
+        <dd>{{ devolution.originalInvoiceDate | date:'dd/MM/yyyy' }}</dd>
+
+        <dt>Cód Vendedor</dt>
+        <dd>{{ devolution.salerCode }}</dd>
+
+        <dt>Vendedor</dt>
+        <dd>{{ devolution.salerName }}</dd>
+
+        <dt>Número do pedido Protheus</dt>
+        <dd>{{ devolution.protheusOrderNumber }}</dd>
+
+        <dt>Tipo de Pedido</dt>
+        <dd>{{ devolution.orderType }}</dd>
+
+        <dt>Motivo</dt>
+        <dd>{{ devolution.reason }}</dd>
+
+        <dt>Valor total com Impostos</dt>
+        <dd>{{ (devolution.totalAmount | currency:"R$ ") || "Não disponível" }}</dd>
+
+        <dt>Valor de Crédito do Cliente</dt>
+        <dd>{{ (devolution.clientCredit | currency:"R$ ") || "Não disponível" }}</dd>
+
+
+        <dt>Produtos</dt>
+        <dd>
+            <ul class="inner-list">
+            <li ng-repeat="product in devolution.products track by $index">
+              <h4 class="inner-list-title">{{ product.code }}</h4>
+              <dl>
+
+                <dd>{{ product.name }}</dd>
+
+                <dt>Quantidade</dt>
+                <dd>{{ product.quantity }}</dd>
+
+                <dt>Valor Unitário</dt>
+                <dd>{{ product.price | currency:"R$ " }}</dd>
+
+                <dt>Preço Total Sem Imposto</dt>
+                <dd>{{ (product.totalAmmountWithoutTaxes | currency:"R$ ") || "Não Disponível" }}</dd>
+
+                <dt>Preço Total Com Imposto</dt>
+                <dd>{{ (product.totalAmmount | currency:"R$ ") || "Não Disponível" }}</dd>
+              </dl>
+            </li>
+          </ul>
+        </dd>
+
+      </dl>
+
+    </ion-content>
+  </form>
+</ion-modal-view>

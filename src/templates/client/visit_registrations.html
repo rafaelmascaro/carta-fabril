@@ -1,0 +1,43 @@
+<ion-view view-title="Registros de Visita" cache-view="false">
+  <ion-nav-title>{{client.nomeFantasia__c}}</ion-nav-title>
+
+  <ion-nav-buttons side="right">
+    <div class="client-buttons">
+      <div class="button button-balanced" ng-click="newOrder(client.Id)">
+        Novo pedido
+      </div>
+      <button class="button button-icon ion-more" ng-click="popover.show($event)"></button>
+    </div>
+  </ion-nav-buttons>
+
+  <ion-content padding="true" class="visit-registrations">
+    <h1 class="current-tab-title">
+      Registros de Visita
+      
+      <button class="button button-small button-outlined button-icon pull-right" ng-click="openFilter($event)">
+        <i class="fa fa-filter"></i>
+      </button>
+
+      <div class="button button-small button-outlined pull-right meta" ng-click="newRegister()">
+        Novo registro
+      </div>
+
+    </h1>
+
+    <div>
+      <div class="empty-list-msg" ng-if="!visitRegistrations.length">Você ainda não possui registros de visitas</div>
+      <ul class="list">
+        <li class="item" ng-click="open(visitRegistration.id)"  ng-repeat="visitRegistration in visitRegistrations track by visitRegistration.id">
+          <h2>{{ visitRegistration.createdDate | date:'dd/MM/yyyy' }} - {{visitRegistration.category}}</h2>
+          <p class="observation">{{visitRegistration.observations}}</p>
+        </li>
+      </ul>
+      <div ng-if="visitRegistrations.legth && !isLastPage">
+        <button
+          class="button button-load-more button-block"
+          ng-click="getMore()"
+        >CARREGAR MAIS</button>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

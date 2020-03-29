@@ -1,0 +1,217 @@
+<ion-view>
+  <ion-nav-title>
+    <p class="order-client">
+      {{ orderService.client.codigoCliente__c }} -
+      {{ orderService.client.nomeFantasia__c }}
+    </p>
+    <p class="order-credit">
+      <strong>Crédito</strong>
+      {{ orderService.client.limiteCredito__c | currency }} /
+      <strong>Saldo</strong>
+      {{ orderService.client.saldoLimiteCredito__c | currency }}
+    </p>
+  </ion-nav-title>
+
+  <ion-content padding="true" class="new-order">
+    <div class="client-section">
+      <h1 class="section-header">Detalhes do cliente</h1>
+
+      <p><strong>Razão Social</strong> {{ orderService.client.Name }}</p>
+      <p><strong>CNPJ</strong> {{ orderService.client.cnpjCpf__c }}</p>
+    </div>
+
+    <div class="client-section">
+      <h1 class="section-header">Condições gerais</h1>
+
+      <p>
+        <strong>Limite de crédito</strong>
+        {{ orderService.client.limiteCredito__c | currency: 'R$ ' }}
+      </p>
+      <p>
+        <strong>Saldo de crédito</strong>
+        {{ orderService.client.saldoLimiteCredito__c | currency: 'R$ ' }}
+      </p>
+      <p>
+        <strong>Custo total de contrato</strong>
+        {{ orderService.client.percTotalContrato__c }}%
+      </p>
+      <p>
+        <strong>% desc. de duplicata</strong>
+        {{ orderService.client.percDescDuplicata__c }}
+      </p>
+      <p>
+        <strong>Outros custos logísticos</strong>
+        {{ orderService.client.percOutrosCustosLog__c }}%
+      </p>
+      <p>
+        <strong>Qtd. de ajudantes</strong>
+        {{ orderService.client.quantoAjudantes__c }}
+      </p>
+      <p>
+        <strong>Valor por ajudante</strong>
+        {{ orderService.client.vlrPorAjudante__c | currency: 'R$ ' }}
+      </p>
+      <p>
+        <strong>Diferença de descarga</strong>
+        {{ orderService.dischargeDiff | currency: 'R$ ' }}
+      </p>
+      <p>
+        <strong>Valor mínimo de pedido</strong>
+        {{ orderService.minOrderValue | currency: 'R$ ' }}
+      </p>
+      <p>
+        <strong>Valor mínimo de duplicata</strong>
+        {{ orderService.minDuplValue | currency: 'R$ ' }}
+      </p>
+    </div>
+
+    <div class="client-section">
+      <h1 class="section-header">Condições específicas</h1>
+
+      <div class="row">
+        <div
+          class="col col-50 input-group"
+          ng-class="{'exception': hasDeliveryDateException()}">
+          <label for="delivery-date">Data de entrega</label>
+          <div class="input-group-spanned">
+            <input
+              id="delivery-date"
+              readonly="readonly"
+              class="input-control"
+              type="text"
+              uib-datepicker-popup="dd/MM/yyyy"
+              show-button-bar="false"
+              datepicker-options="deliveryDatepicker.options"
+              is-open="deliveryDatepicker.opened"
+              ng-model="orderService.order.deliveryDate"
+              ng-change="checkException('DeliveryDate')"/>
+            <span
+              class="input-group-addon"
+              ng-click="deliveryDatepicker.toggleOpened()">
+              <i class="fa fa-calendar"></i>
+            </span>
+          </div>
+        </div>
+
+        <div class="col col-50 input-group">
+          <label for="shipping">Frete</label>
+          <select
+            id="shipping"
+            class="input-control"
+            ng-options="option as option for option in orderService.shippingOptions"
+            ng-model="orderService.order.shipping">
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div
+          class="col col-50 input-group"
+          ng-class="{'exception': orderService.order.paymentOption.bloqueiaPedido__c}">
+          <label for="payment-option">Cond. pagamento</label>
+          <select
+            id="payment-option"
+            class="input-control"
+            ng-model="orderService.order.paymentOption"
+            ng-options="option as option.Name for option in orderService.paymentOptions track by option.Id"
+            ng-change="assertPaymentOption()"
+          ><option disabled="true" hidden="true" selected="true"></option>
+          </select>
+        </div>
+
+        <div class="col col-50 input-group">
+          <label for="fin-discount">Desc. financeiro</label>
+
+          <div class="input-group-spanned">
+            <input
+              id="fin-discount"
+              class="input-control"
+              type="number"
+              ng-model="orderService.order.finDiscount"
+              ng-disabled="orderService.order.paymentOption.maxDescFinanceiro__c == 0"
+              ng-change="checkException('FinDiscount')"/>
+            <span class="input-group-addon">%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col col-50 input-group">
+          <label for="customer-order-number">Nº pedido do cliente</label>
+          <input
+            id="customer-order-number"
+            class="input-control"
+            type="text"
+            maxlength="15"
+            ng-model="orderService.order.customerOrderNumber"/>
+        </div>
+
+        <div class="col col-50 input-group">
+          <label for="customer-bonification">Nº ped. cliente bonif.</label>
+          <input
+            id="customer-bonification"
+            class="input-control"
+            type="text"
+            maxlength="15"
+            ng-model="orderService.order.customerOrderBonification"
+          />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col input-group">
+          <ion-checkbox ng-model="orderService.order.deliveryFractions"
+            >Aceita entrega parcial?</ion-checkbox
+          >
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col input-group">
+          <label for="nfMsg">Mensagem da nota fiscal</label>
+          <textarea
+            id="nfMsg"
+            class="input-control text"
+            maxlength="60"
+            ng-model="orderService.order.nfMsg"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col input-group">
+          <label for="observation">Observação</label>
+          <textarea
+            id="observation"
+            class="input-control text"
+            maxlength="100"
+            ng-model="orderService.order.observation"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col input-group">
+          <ion-checkbox
+            id="checkboxCombo"
+            ng-checked="orderService.order.possuiCombo"
+            ng-model="orderService.order.possuiCombo"
+            >Possui Combo?</ion-checkbox
+          >
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col input-group" ng-if="orderService.order.possuiCombo">
+          <multiselect
+            items="orderService.order.allCombos"
+            text-property="value"
+            value-property="id"
+            default-value="orderService.order.valueCombos"
+            text="Selecione o(s) Combo(s)">
+          </multiselect>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

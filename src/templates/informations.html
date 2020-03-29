@@ -1,0 +1,48 @@
+<ion-view cache-view="false">
+  <ion-nav-title>Carta Fabril</ion-nav-title>
+
+  <ion-content padding="true" class="general-info">
+
+    <ion-refresher on-refresh="doRefresh()"></ion-refresher>
+    
+    <div class="section">
+      <h2 class="section-header" ng-click="toggleCategory('unit')">
+        Unidades Carta Fabril
+
+        <i ng-class="{ 'ion-chevron-up': isOpened('unit'), 'ion-chevron-down': !isOpened('unit') }"></i>
+      </h2>
+
+      <div class="section-content" ng-class="{ 'opened': isOpened('unit') }">
+        <sos-unity ng-repeat="unity in unities"></sos-unity>
+      </div>
+    </div>
+
+    <div class="section" ng-repeat="sector in sectors">
+      <h2 class="section-header" ng-click="toggleSector(sector)">
+        Contatos {{::sector.name}}
+
+        <i ng-class="{ 'ion-chevron-up': sector.isOpened, 'ion-chevron-down': !sector.isOpened }"></i>
+      </h2>
+
+      <div class="section-content" ng-class="{ 'opened': sector.isOpened }">
+        <sos-contact ng-repeat="contact in sector.contacts"></sos-contact>
+      </div>
+    </div>
+
+    <div class="section" ng-repeat="procedure in procedures">
+      <h2 class="section-header" ng-click="toggleSector(procedure)">
+        {{::procedure.name}}
+
+        <i ng-class="{ 'ion-chevron-up': procedure.isOpened, 'ion-chevron-down': !procedure.isOpened }"></i>
+      </h2>
+
+      <div class="section-content" ng-class="{ 'opened': procedure.isOpened }">
+        <p ng-repeat="sentence in procedure.description track by $index">
+          {{::sentence}}<br ng-if="sentence.length" />
+        </p>
+        <p ng-if="procedure.link.length > 0"> Acesse de forma digital no link: <a href="{{::procedure.link}}" target="_blank">{{::procedure.link}}</a> </p>
+      </div>
+    </div>
+
+  </ion-content>
+</ion-view>

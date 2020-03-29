@@ -1,0 +1,205 @@
+<ion-view>
+  <ion-nav-buttons side="right">
+    <div class="button button-balanced draft" ng-click="placeDraftOrder()">
+      <i class="fa fa-save"></i>
+      {{ sending ? 'Enviando...' : 'Salvar rascunho' }}
+    </div>
+
+    <div class="button button-balanced" ng-click="placeOrder()">
+      <i class="fa fa-paper-plane-o"></i>
+      {{ sending ? 'Enviando...' : 'Enviar pedido' }}
+    </div>
+  </ion-nav-buttons>
+
+  <ion-content padding="true" class="order-summary">
+    <div class="summary-content">
+      <div class="section">
+        <div class="row">
+          <div class="col col-50 summary-logo">
+            <img src="img/logo-carta-fabril-resumo.png">
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <p><strong>Razão Soc.: </strong>{{orderService.client.Name}}</p>
+        <p><strong>Nome fantasia: </strong>{{orderService.client.nomeFantasia__c}}</p>
+        <p><strong>Código do cliente: </strong>{{orderService.client.codigoCliente__c}}</p>
+        <p><strong>Loja: </strong>{{orderService.client.loja__c}}</p>
+        <p><strong>Loja do cliente: </strong>{{orderService.client.lojaCliente__c}}</p>
+        <p><strong>CNPJ: </strong>{{orderService.client.cnpjCpf__c}}</p>
+        <p><strong>Insc. Estadual: </strong>{{orderService.client.inscricaoEstadual__c}}</p>
+        <p><strong>Telefone: </strong>{{orderService.client.TelefoneCliente1__c}}</p>
+        <p><strong>Endereço: </strong>{{orderService.client.enderecoCompleto__c}}</p>
+      </div>
+
+      <div class="section">
+        <p><strong>Número Pedido Cliente: </strong><br>{{orderService.order.customerOrderNumber}}</p>
+        <p><strong>Número Pedido Bônus Cliente: </strong><br>{{orderService.order.customerOrderBonification}}</p>
+      </div>
+
+      <div class="section product" ng-repeat="product in orderService.selectedProducts">
+        <div class="row product-name">
+          <p ng-class="{'warning':product.discountPercent > product.percDesconto__c}"><strong>Produto:</strong> {{product.descProdutoNf__c}}</p>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <p><strong>Un. de Faturamento</strong></p>
+          </div>
+
+          <div class="col">
+            <p>{{product.codUnidadeFaturamento__c}} - {{product.DescricaoUnidadeFaturamento__c}}</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <p><strong>Código do produto</strong></p>
+          </div>
+
+          <div class="col">
+            <p>{{product.CodigoProduto__c}}</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <p><strong>Preço de Lista</strong></p>
+          </div>
+
+          <div class="col">
+            <p>{{product.precoLista__c | currency : 'R$'}}</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <p><strong>Desconto</strong></p>
+          </div>
+
+          <div class="col">
+            <p>{{product.discountPercent || 0 | number : 2 }}%</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <p><strong>Preço Líquido</strong></p>
+          </div>
+
+          <div class="col">
+            <p>{{product.liquidPrice | currency : 'R$'}}</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <p><strong>Preço Líq. c/ Imp*</strong></p>
+          </div>
+
+          <div class="col">
+            <p>{{product.liquidPriceWithTax | currency : 'R$'}}</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <p><strong>Qtde.</strong></p>
+          </div>
+
+          <div class="col">
+            <p>{{product.saleQtd || 0 }}</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <p><strong>Qtde. bonificada</strong></p>
+          </div>
+
+          <div class="col">
+            <p>{{product.bonusQtd || 0}}</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <p><strong>Subtot venda s/ imp</strong></p>
+          </div>
+
+          <div class="col">
+            <p>{{product.saleTotal | currency : 'R$'}}</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <p><strong>Subtot venda c/ imp*</strong></p>
+          </div>
+
+          <div class="col">
+            <p>{{product.saleTotalWithTax | currency : 'R$'}}</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <p><strong>Subtot bônus s/ imp</strong></p>
+          </div>
+
+          <div class="col">
+            <p>{{product.bonusTotal | currency : 'R$'}}</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <p><strong>Subtot bônus c/ imp*</strong></p>
+          </div>
+
+          <div class="col">
+            <p>{{product.bonusTotalWithTax | currency : 'R$'}}</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <p><strong>Cubagem</strong></p>
+          </div>
+
+          <div class="col">
+            <p>{{product.cubagemTotal__c || 0}}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section right">
+        <p><strong>Total Venda sem imposto: </strong>{{orderService.orderTotal() | currency : 'R$'}}</p>
+        <p><strong>Total Venda com imposto*: </strong>{{orderService.orderTotalWithTax() | currency : 'R$'}}</p>
+        <p><strong>Total Bônus sem imposto: </strong>{{orderService.orderBonusTotal() | currency : 'R$'}}</p>
+        <p><strong>Total Bônus com imposto*: </strong>{{orderService.orderBonusTotalWithTax() | currency : 'R$'}}</p>
+      </div>
+
+      <div class="section">
+        <p><strong>Quantidade de Venda: </strong>{{orderService.orderQuantity() || 0 }}</p>
+        <p><strong>Quantidade Bonificada: </strong> {{orderService.bonusQuantity() || 0 }}</p>
+        <p><strong>Quantidade Total: </strong> {{orderService.bonusQuantity() + orderService.orderQuantity()}}</p>
+        <p><strong>Percentual Bonus sobre Venda: </strong> {{orderService.orderBonusPercent()}}%</p>
+        <p><strong>Cubagem do pedido:</strong> {{orderService.totalVolume() | number : 2}} m³</p>
+        <p><strong>Condição de pgto.: </strong>{{orderService.order.paymentOption.Name}}</p>
+        <p><strong>Desconto financeiro: </strong>{{orderService.order.finDiscount}}</p>
+        <p><strong>Frete: </strong>{{orderService.order.shipping}}</p>
+        <p><strong>Data de envio: </strong>{{date | date: "dd/MM/yyyy"}}</p>
+        <p><strong>Data de entrega: </strong>{{orderService.order.deliveryDate | date: "dd/MM/yyyy"}}</p>
+      </div>
+
+      <div class="section">
+        <p><strong>Observações: </strong>{{orderService.order.observation}}</p>
+        <p><strong>Msg. Nota Fiscal: </strong>{{orderService.order.nfMsg}}</p>
+        <p><strong>Explicação de Transgressão da Regra: </strong>{{orderService.order.ruleExceptionNote}}</p>
+        <p><strong>*</strong> <em>Valores com impostos sujeitos a pequenas alterações em detrimento a arredondamento.</em></p>
+      </div>
+    </ion-content>
+  </div>
+</ion-view>

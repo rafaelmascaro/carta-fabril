@@ -1,0 +1,265 @@
+<ion-view>
+  <ion-nav-title>
+    <p class="order-client">{{orderService.client.codigoCliente__c}} - {{orderService.client.nomeFantasia__c}}</p>
+    <p class="order-credit">
+      <strong>Crédito</strong> {{orderService.client.limiteCredito__c | currency}} / <strong>Saldo</strong>
+      {{orderService.client.saldoLimiteCredito__c | currency}}
+    </p>
+  </ion-nav-title>
+
+  <ion-nav-buttons side="right">
+    <div class="button button-balanced drawer-button" ng-class="{ opened: opened }"
+      ng-click="toggleDrawer()"
+    >
+      <i class="fa fa-bars fa-rotate-90"></i>
+    </div>
+  </ion-nav-buttons>
+
+  <ion-content padding="true" class="order-items">
+    <ul class="list">
+      <li ng-repeat="product in orderService.selectedProducts">
+        <div class="row">
+          <div class="col">
+            <h4 ng-class="{'warning':product.discountPercent > product.percDesconto__c}">{{ product.descProdutoNf__c }}</h4>
+            <p>{{ product.CodigoProduto__c }}</p>
+          </div>
+        </div>
+
+        <div class="row product-details">
+          <div class="col">
+            <p class="detail-title">Pr. Lista</p>
+            <p><strong>{{ product.precoLista__c | currency }}</strong></p>
+          </div>
+
+          <div class="col">
+            <p class="detail-title">Desconto</p>
+            <p><strong>{{ product.discountPercent | number : 2 }} %</strong></p>
+          </div>
+
+          <div class="col">
+            <p class="detail-title">Pr. Líquido</p>
+            <p><strong>{{ product.liquidPrice | currency }}</strong></p>
+          </div>
+
+          <div class="col">
+            <p class="detail-title">Qtde.</p>
+            <p><strong>{{ product.saleQtd }}</strong></p>
+          </div>
+        </div>
+
+        <div class="row product-total">
+          <div class="col">
+            <p>Total</p>
+          </div>
+
+          <div class="col total">
+            <p>{{ product.liquidPrice * product.saleQtd | currency }}</p>
+          </div>
+        </div>
+
+        <div id="product-{{product.Id}}" class="row product-edition" ng-class="{ editing: product.editing }">
+          <div class="col">
+            <div class="product-fields">
+              <div class="row">
+                <div class="col col-50 input-group">
+                  <label for="product-qtd">Quantidade</label>
+                  <input id="product-qtd" ng-readonly="saleOrBonus(product,orderService) == 'bonus'" class="input-control" type="tel" ng-model="product.saleQtd" ng-change="orderService.calculateBonusDiscount(product)" ui-number-mask="0" />
+                </div>
+
+                <div class="col col-50 input-group">
+                  <label for="discount-value">Preço $</label>
+                  <input id="discount-value" class="input-control" ng-model="product.price" type="tel" ng-change="orderService.calculateDiscount(product)" ng-blur="verifyStandardPrice(product);orderService.automationOfPrices(product,orderService)" value="0" ui-money-mask />
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col col-50 input-group">
+                  <label for="discount-perc">Desconto %</label>
+
+                  <div class="input-group-spanned">
+                    <input id="discount-perc" class="input-control" type="tel" ng-model="product.discount" ng-change="orderService.calculatePrice(product)" ng-blur="verifyStandardPrice(product);orderService.automationOfPrices(product,orderService)" ui-number-mask ui-negative-number />
+                    <span class="input-group-addon">%</span>
+                  </div>
+                </div>
+
+                <div class="col col-50 input-group">
+                  <label for="bonus-qtd">Qtde. Bonificada</label>
+                  <input id="bonus-qtd" ng-readonly="saleOrBonus(product,orderService) == 'sale'" class="input-control" type="tel" ng-model="product.bonusQtd" ng-change="orderService.calculateBonusDiscount(product)" ui-number-mask="0" />
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col col-33 input-group">
+                  <label for="bonus-perc">Bonificação %</label>
+                  <p><strong>{{product.bonusPerc | number : 2}}</strong></p>
+                </div>
+
+                <div class="col col-33 input-group" ng-class="{ 'exception': orderService.validateAverageDiscount(product) }">
+                  <label>Desc. médio %</label>
+                  <p><strong>{{product.averageDiscount | number : 2}}</strong></p>
+                </div>
+
+                <div class="col col-33 input-group">
+                  <label>Pr. Liq. Final</label>
+                  <p><strong>{{product.finalPrice | number : 2}}</strong></p>
+                </div>
+              </div>
+
+              <div class="row remove-row">
+                <div class="col col-50"></div>
+
+                <div class="col col-50 input-group remove" ng-click="removeItem(product.Id)">
+                  <p>Retirar do pedido</p>
+                  <i class="fa fa-times-circle fa-2x"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="expand-fields" ng-click="toggleEdition(product.Id)">
+              <i class="fa fa-angle-down expand"></i>
+              <i class="fa fa-angle-up retract"></i>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </ion-content>
+
+  <div class="footer">
+    <div class="row">
+      <div class="col col-45 info" ng-click="openExceptions()">
+        <p class="exception" ng-class="{ 'active': orderService.exceptions.length > 0 }">
+          Exceção à regra<i class="fa fa-exclamation-triangle"></i>
+        </p>
+      </div>
+
+      <div class="col col-45 info">
+        <p>Total s/ imposto</p>
+        <p class="big">{{orderService.orderTotal() | currency}}</p>
+      </div>
+
+      <div class="col col-10 action" ng-click="toggleFooter()">
+        <p><i class="icon ion-more" ng-show="!footerOpened"></i></p>
+        <p><i class="icon ion-close-circled" ng-if="footerOpened"></i></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-content" ng-class="{ opened: footerOpened }">
+    <div class="row">
+      <div class="col col-50">
+        <p><strong>Data de entrega:</strong></p>
+      </div>
+
+      <div class="col col-50 right">
+        <p>{{orderService.order.deliveryDate | date: "dd/MM/yyyy"}}</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col col-50">
+        <p><strong>Quantidade de venda:</strong></p>
+      </div>
+
+      <div class="col col-50 right">
+        <p>{{orderService.orderQuantity()}}</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col col-50">
+        <p><strong>Quantidade bonificada:</strong></p>
+      </div>
+
+      <div class="col col-50 right">
+        <p>{{orderService.bonusQuantity()}}</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col col-50">
+        <p><strong>Quantidade total:</strong></p>
+      </div>
+
+      <div class="col col-50 right">
+        <p>{{orderService.bonusQuantity() + orderService.orderQuantity()}}</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col col-50">
+        <p><strong>Cubagem do pedido:</strong></p>
+      </div>
+
+      <div class="col col-50 right">
+        <p>{{orderService.totalVolume() | number :2}} m³</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col col-30">
+        <p><strong>Cond. pgto.:</strong></p>
+      </div>
+
+      <div class="col col-70 right">
+        <p style="white-space: nowrap;font-size:.8em">{{orderService.order.paymentOption.Name}}</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col col-50">
+        <p><strong>Desc. financeiro:</strong></p>
+      </div>
+
+      <div class="col col-50 right">
+        <p>{{orderService.order.finDiscount | number :0}}%</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col col-50">
+        <p><strong>Frete:</strong></p>
+      </div>
+
+      <div class="col col-50 right">
+        <p>{{orderService.order.shipping}}</p>
+      </div>
+    </div>
+  </div>
+
+  <drawer side="right">
+    <ion-content ng-controller="RightMenuController" class="products-menu">
+      <div class="bar-header item-input products-search-bar">
+        <div class="item-input-wrapper">
+          <i class="icon ion-ios-search placeholder-icon"></i>
+          <input type="search" class="input-search" placeholder="Busca" ng-model="query.term" />
+        </div>
+      </div>
+
+      <ul class="list list-header">
+        <li ng-repeat="groupProducts in orderService.sortedProducts" class="item item-header"
+          ng-show="filteredValue.length > 0">
+          <h1>{{groupProducts[0]}}</h1>
+
+          <ul class="list">
+            <li class="item" ng-repeat="product in groupProducts[1] | filter:query.term as filteredValue"
+              ng-click="toggleSelect(product.Id, product.selected)" ng-class="{ selected: product.selected }">
+              <div>
+                <span class="bfi fa-stack fa-1">
+                  <i class="fa fa-square fa-stack-2x"></i>
+                  <i class="fa fa-long-arrow-left fa-stack-1x fa-inverse"></i>
+                </span>
+              </div>
+
+              <div class="product-description">
+                <h2 class="product-name">{{product.descProdutoNf__c}}</h2>
+                <p>{{product.CodigoProduto__c}}</p>
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </ion-content>
+  </drawer>
+
+</ion-view>

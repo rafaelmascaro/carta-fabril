@@ -1,0 +1,30 @@
+<ion-popover-view class="client-menu">
+  <ion-content>
+    <div class="list">
+      <a class="item" ui-sref="client.overview" ng-click="popover.hide()">
+        Visão Geral
+
+        <i class="fa fa-circle red" ng-show="overviewBadge"></i>
+      </a>
+      <a class="item" ui-sref="client.orderHistory" ng-click="popover.hide()">
+        Histórico de Pedidos
+      </a>
+      <a class="item"  ui-sref="client.invoices" ng-click="popover.hide()">
+        Notas Fiscais
+      </a>
+      <a class="item"  ui-sref="client.devolutions" ng-click="popover.hide()">
+        Devoluções
+
+        <i class="fa fa-circle red" ng-show="devolutionsBadge"></i>
+      </a>
+      <a class="item"  ui-sref="client.delinquencies" ng-click="popover.hide()">
+        Inadimplência
+
+        <i class="fa fa-circle red" ng-show="delinquenciesBadge"></i>
+      </a>
+      <a class="item" ui-sref="client.visitRegistrations" ng-click="popover.hide()">
+        Registros de Visita
+      </a>
+    </div>
+  </ion-content>
+</ion-popover-view>

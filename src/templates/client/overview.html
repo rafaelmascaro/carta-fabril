@@ -1,0 +1,134 @@
+<ion-view>
+  <ion-nav-title>{{client.nomeFantasia__c}}</ion-nav-title>
+
+    <ion-nav-buttons side="right" class="client-bar-buttons">
+      <div class="client-buttons">
+        <div class="button button-balanced" ng-click="newOrder(client.Id)">
+          Novo pedido
+        </div>
+        <button class="button button-icon ion-more" ng-click="popover.show($event)"></button>
+      </div>
+    </ion-nav-buttons>
+
+  <ion-content padding="true" class="overview">
+    <h1 class="current-tab-title">Visão Geral</h1>
+
+
+	<ion-refresher on-refresh="doRefresh()"></ion-refresher>
+
+    <div class="row" ng-if="onMobile">
+      <div class="col">
+        <button ng-show="!checkinDone" class="button button-balanced checkin" ng-click="checkIn()" ng-class="{ 'disabled': checkingIn }">
+          <i ng-class="{ 'ion-location': !checkingIn, 'fa fa-spinner fa-spin': checkingIn }"></i>
+          {{ checkingIn ? '' : 'Check-In' }}
+
+        </button>
+        <button ng-show="checkinDone" class="button button-balanced checkin" ng-click="checkOut()" ng-class="{ 'disabled': checkingOut || checkoutDone }">
+          <i ng-class="{ 'ion-location': !checkingOut, 'fa fa-spinner fa-spin': checkingOut }"></i>
+          {{ checkingOut ? '' : 'Check-Out' }}
+        </button>
+      </div>
+
+      <div class="col checkin-info" ng-show="!checkoutDone">
+        <span class="checkin-info-title">Último check-in:</span><br>
+        <span ng-if="(lastCheckin.DataCheckin | date:'yyyy/MM/dd') <= (dataVerao | date:'yyyy/MM/dd')" class="checkin-info-date">
+          {{lastCheckin.DataCheckin | date:'dd/MM/yyyy - HH:mm:ss' : '-0200'}}</span><br>
+        <span ng-if="(lastCheckin.DataCheckin | date:'yyyy/MM/dd') > (dataVerao | date:'yyyy/MM/dd')" class="checkin-info-date">
+          {{lastCheckin.DataCheckin | date:'dd/MM/yyyy - HH:mm:ss' : '-0300'}}</span><br>
+        {{lastCheckin.EnderecoCheckin}}
+      </div>
+      <div class="col checkin-info" ng-show="checkoutDone">
+        <span class="checkin-info-title">Último check-out:</span> <br>
+          <span ng-if="(lastCheckin.DataCheckout | date:'yyyy/MM/dd') <= (dataVerao | date:'yyyy/MM/dd')" class="checkin-info-date">
+            {{lastCheckin.DataCheckout | date:'dd/MM/yyyy - HH:mm:ss' : '-0200'}}</span><br>
+          <span ng-if="(lastCheckin.DataCheckout | date:'yyyy/MM/dd') > (dataVerao | date:'yyyy/MM/dd')" class="checkin-info-date">
+            {{lastCheckin.DataCheckout | date:'dd/MM/yyyy - HH:mm:ss' : '-0300'}}</span><br>
+        {{lastCheckin.EnderecoCheckout}}
+      </div>
+    </div>
+
+    <div class="client-section">
+      <h2 class="section-header">Detalhes do cliente</h2>
+
+      <p><strong>Razão social</strong>  {{client.Name}}</p>
+      <p><strong>Nome fantasia</strong> {{client.nomeFantasia__c}}</p>
+      <p><strong>CNPJ</strong>  {{client.cnpjCpf__c}}</p>
+      <p><strong>Inscr. estadual</strong> {{client.inscricaoEstadual__c}}</p>
+      <p><strong>Cód. cliente</strong>  {{client.codigoCliente__c}}</p>
+      <p><strong>Cód. loja</strong> {{client.loja__c}}</p>
+      <p><strong>Loja do cliente</strong> {{client.lojaCliente__c}}</p>
+      <p><strong>Tel. </strong> {{client.TelefoneCliente1__c}}</p>
+      <p><strong>Rede</strong>  {{client.Rede__r.Name}}</p>
+      <p><strong>Tabela regional</strong> {{client.NomeTabelaRegional__c}}</p>
+      <p><strong>Cond. pgto.</strong> {{client.condicaoPgto__r.Name}}</p>
+      <p><strong>Suspenso?</strong> <span ng-class="{ 'red': client.suspenso__c }">{{client.suspenso__c ? 'Sim' : 'Não'}}</span></p>
+      <p ng-show="client.suspenso__c"><strong>Obs. de suspensão</strong> {{client.obsSuspensao__c}}</p>
+      <p><strong>Cód. Vendedor</strong> {{client.vendedorRepresentante__r.codigo__c}}</p>
+      <p><strong>Vendedor</strong> {{client.vendedorRepresentante__r.Name}}</p>
+      
+      
+    </div>
+
+    <div class="client-section">
+      <h2 class="section-header">Informações de endereço</h2>
+
+      <p>
+        <strong>Endereço:</strong>
+        {{client.endereco__c}}, {{client.bairro__c}} - {{client.Municipio__c}} - {{client.estado__c}} - {{client.cep__c}}
+        <a ng-href="{{mapURL}}" ng-if="!!mapURL" target="_blank" data-rel="external">ABRIR MAPA</a>
+      </p>
+    </div>
+
+    <div class="client-section">
+      <h2 class="section-header">Informações financeiras</h2>
+
+      <p><strong>Limite de crédito</strong> {{client.limiteCredito__c | currency:"R$ "}}</p>
+      <p><strong>Saldo do limite de crédito</strong> {{client.saldoLimiteCredito__c | currency:"R$ "}}</p>
+      <p><strong>Status cliente</strong> <span ng-class="{ 'red': client.statusCliente__c == 'Inativo' }">{{client.statusCliente__c}}</span></p>
+      <p>
+        <strong>Bloqueado</strong> <span ng-class="{ 'red': client.statusCliente__c == 'Inativo' }">{{client.bloqueado__c}}
+      </p>
+      <p><strong>Obs. financeira</strong> {{client.obsFinanceira__c}}</p>
+      <p><strong>Bco cob. simples</strong> {{client.bcoCobSimp__c}}</p>
+      <p><strong>Desc. duplicata</strong> {{client.descDuplic__c}}</p>
+    </div>
+
+    <div class="client-section">
+      <h2 class="section-header">Informações logísticas</h2>
+
+      <p><strong>Exige agendamento?</strong> {{client.exigeAgendamentoPrevio__c}}</p>
+      <p><strong>Exige código de barras?</strong> {{client.exigeCodBarras__c}}</p>
+      <p><strong>Vlr. da descarga por fardo</strong>  {{client.vlrDescargaPFardoCaixa__c | currency:"R$ "}}</p>
+      <p><strong>Vlr. da decarga por pallet</strong> {{client.vlrDescargaPPalete__c | currency:"R$ "}}</p>
+      <p><strong>Tipo de Carga</strong> {{client.tipoDeCarga__c}}</p>
+    </div>
+
+    <div class="client-section">
+      <h2 class="section-header">Informações fiscais e contábeis</h2>
+
+      <p><strong>E-mail NF cliente</strong> {{client.email__c}}</p>
+      <p><strong>Texto msg. (Regime Especial)</strong> {{client.textoMensagem__c}}</p>
+      <p><strong>Vigência regime especial</strong> {{client.vigenciaRegimeEspecial__c | date: "dd/MM/yyyy"}}</p>
+      <p><strong>Desc. p/ SUFRAMA</strong> {{client.descSufr__c}}</p>
+    </div>
+
+    <div class="client-section">
+      <h2 class="section-header">Contrato</h2>
+
+      <p><strong>Descrição do contrato</strong> {{ client.descricaoContrato__c }}</p>
+      <p><strong>% Total do contrato</strong> {{ client.percTotalContrato__c| number : 2}}</p>
+      <p><strong>% Desc duplicata</strong>  {{ client.percDescDuplicata__c| number : 2}}</p>
+    </div>
+
+    <div ng-if="contacts.length" class="client-section">
+      <h2 class="section-header">Contatos</h2>
+      <ul class="contacts-list">
+        <li class="item" ng-repeat="contact in contacts track by contact.id">
+          <h2>{{ contact.name }}</h2>
+          <p><strong>Cargo</strong> {{ contact.role }}</p>
+          <p><strong>Telefone </strong><a ng-href="tel:{{ contact.phone }}">{{ contact.phone }}</a></p>
+        </li>
+      </ul>
+    </div>
+  </ion-content>
+</ion-view>

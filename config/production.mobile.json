@@ -1,0 +1,12 @@
+{
+  "env": "production",
+  "appName": "Carta Fabril",
+  "appId": "br.com.carta_fabril.prd",
+  "sfClientId": "3MVG9uudbyLbNPZN9zQL0KYmAXew3sWSM_GlxhC2TRfxhbQ6jZfeOlBqvUjzHgEiJspQpkSJ2kCTpEULEqewy",
+  "sfClientSecret": "8128310651513625921",
+  "sfOauthUrl": "https://login.salesforce.com/",
+  "sfPartnerOauthUrl": "https://portaldevendascartafabril.force.com/representantes",
+  "sfRedirectUri": "cartafabril://from_salesforce",
+  "gmapsApiKey": "AIzaSyCLWbpUqdb2tdco8Q5dOs98TSqWdO4utEE",
+  "destination": "mobile"
+}

@@ -1,0 +1,40 @@
+.general-info {
+  h2.section-header {
+    color: #000;
+    font-size: 20px;
+    font-weight: lighter;
+    margin-top: 30px;
+    margin-right: 5px;
+    padding-right: 30px;
+    border-bottom: 1px #00a88a solid;
+    padding-bottom: 3px;
+    position: relative;
+
+    i {
+      position: absolute;
+      color: #00a88a;
+      right: 0;
+    }
+  }
+
+  .section {
+    margin-bottom: 15px;
+
+    p {
+      margin: 0 0 5px;
+    }
+
+    .section-content {
+      display: none;
+
+      &.opened {
+        display: block;
+      }
+    }
+  }
+
+  sos-contact, sos-unity {
+    display: block;
+    margin-bottom: 20px;
+  }
+}

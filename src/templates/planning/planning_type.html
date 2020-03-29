@@ -1,0 +1,48 @@
+<ion-view >
+    <ion-nav-title>
+            <p>Planejamento {{ visitPlanningService.planDate | date: 'dd/MM/yyyy'}}</p>
+    </ion-nav-title>
+    <ion-nav-buttons side="right">
+        <div class="button button-balanced draft" ng-click="placeDraftPlanning()">
+            <i class="fa fa-save"></i>
+            {{ sending ? 'Enviando...' : 'Salvar' }}
+        </div>
+    </ion-nav-buttons>
+
+    <ion-content padding="true" class="clients has-subheader ordering-has-subheader">
+            <ul class="list list-header">
+                <li class="item item-planning" ng-repeat="client in visitPlanningService.selectedAccounts | filter:{ IndicadorDeVisitaPlanejada: visitPlanningService.InPlanning }  track by client.Id">
+                    <h2> {{::client.nomeFantasia__c}}</h2>
+                    <p><strong>Razão social:</strong> {{::client.Name}}</p>
+                    <p><strong>Código e loja:</strong> {{::client.codigoCliente__c}}-{{::client.loja__c}}</p>
+                    <p><strong>Loja do cliente:</strong> {{::client.lojaCliente__c}}</p>
+                    <p><strong>CNPJ: </strong>{{::client.cnpjCpf__c}}</p>
+                    <p><strong>Bairro: </strong>{{::client.bairro__c}}</p>
+                    <p><strong>Cód. Vendedor</strong> {{::client.vendedorRepresentante__r.codigo__c}}</p>
+                    <p><strong>Vendedor</strong> {{::client.vendedorRepresentante__r.Name}}</p>
+                    <p><strong>Ultíma Positivação:</strong> {{::client.DataUltimaPositivacao__c | date:'dd/MM/yyyy'}}</p>
+                    <p ng-show="visitPlanningService.InPlanning"><strong>Sequencia:</strong> {{client.sequencia}}</p>
+                    
+                    <p ng-if="client.tipoCadastro__c!='Merchan'"><strong>Tipo de Visita:</strong> 
+                        <select id="visit-option" ng-model="client.tipoVisita" 
+                        ng-options="value as value for (key, value) in visitPlanningService.newPlanningData.visitTypeOptions"></select>
+                    </p>
+                    
+                    <p ng-if="client.tipoCadastro__c=='Merchan'"><strong>Tipo de Visita:</strong> Merchan </p>
+
+                    <div ng-show="!client.ClientePositivado__c" ng-click="toggleSelectOnOrder(client.Id)">
+                        <i class="fa fa-bell fa-red"></i>
+                    </div>
+                    <div ng-show="client.ClientePositivado__c" ng-click="toggleSelectOnOrder(client.Id)">
+                        <i class="fa fa-bell fa-green"></i>
+                    </div>
+                    <div ng-show="visitPlanningService.InPlanning" ng-click="moveUpAccount(client.Id)" style="top: 80px !important">
+                            <i class="fa fa-level-up" style="color: #004270 !important; font-size: 26px !important;"></i>
+                        </div>                          
+                    <div ng-show="visitPlanningService.InPlanning" ng-click="moveDownAccount(client.Id)" style="top: 150px !important">
+                        <i class="fa fa-level-down" style="color: #004270 !important; font-size: 26px !important;"></i>
+                    </div>                    
+                </li>
+            </ul>
+        </ion-content>    
+</ion-view>

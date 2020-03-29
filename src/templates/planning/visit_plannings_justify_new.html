@@ -1,0 +1,26 @@
+<ion-modal-view class="new-visit-registration">
+    <ion-header-bar align-title="left">
+        <p class="title"><i class="ion-location"></i>Justificar não visita</p>
+        <button class="button" ng-click="close()">CANCELAR <i class="icon ion-ios-close-outline"></i></button>
+    </ion-header-bar>
+
+    <form name="form">
+        <ion-content class="padding">
+            <div class="input-group">
+                <p><strong>Motivo da Falta da Visita:</strong> <select id="visit-option" ng-model="visitRegistration.MotivoDaFaltaDaVisita__c">
+                            <option ng-repeat="option in picklistJustify" value="{{option.value}}">{{option.label}}</option>
+                          </select></p>
+                
+                <textarea placeholder="Observações não visita*" name="observations" class="input-control text" ng-model="visitRegistration.JustificativaFaltaVisita__c" required>
+                </textarea>
+            </div>
+        </ion-content>
+
+        <ion-footer-bar>
+            <button class="button pull-right" ng-click="save(form)" ng-class="{ 'disabled': form.$invalid  }">
+                Justificar
+            </button>
+        </ion-footer-bar>
+    </form>
+</ion-modal-view>
+      

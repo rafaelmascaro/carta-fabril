@@ -1,0 +1,152 @@
+h1.current-tab-title {
+  font-weight: normal;
+  margin: -13px -15px 0;
+  background-color: #0083b4;
+  font-size: 16px;
+  color: #fff;
+  padding: 10px 6px 10px 15px;
+
+  .button-icon {
+    color: inherit;
+    min-height: 20px;
+  }
+}
+
+.current-tab-title div.button-outlined {
+	background: transparent;
+	border: 1px solid #fff;
+	color: #fff;
+	top: -4px;
+	min-height: auto;
+	padding: 0 10px;
+}
+
+.empty-list-msg {
+  text-align: center;
+  margin-top: 40px
+}
+
+.button.button-load-more {
+  background-color: #0083b4;
+  color: #fff
+}
+
+.client-tab .button-bar .button {
+  color: #0083b4;
+  border-color: #0083b4;
+  background-color: #fff;
+}
+
+.client-tab .button-bar .button-selected {
+  background-color: #0083b4;
+  color: #fff;
+}
+
+.order-history .button-bar {
+  margin-top: 20px
+}
+
+.detail-modal {
+  .detail-items {
+    &>dt {
+      font-weight: normal;
+      padding-top: 10px;
+      border-top: 1px solid #ededed;
+      font-size: 13px;
+      color: #9f9f9f;
+    }
+
+    &>dd {
+      padding-bottom: 10px;
+    }
+  }
+
+  .inner-table {
+    margin-top: 10px;
+    border: 1px solid #000;
+    font-size: .8em;
+    white-space: nowrap;
+
+    td, th {
+      border: 1px solid #000;
+      padding: 3px;
+    }
+
+    th {
+      background: #000;
+      color: #fff;
+    }
+  }
+
+  .inner-list {
+
+    font-size: 13px;
+
+    .inner-list-title {
+      font-size: 13px
+    }
+
+    dt {
+      float:left;
+      margin-right: .5em;
+      color: #9f9f9f;
+      font-weight: normal;
+    }
+
+    dd {
+      font-weight: normal;
+    }
+
+  }
+
+  .inner-list-compact {
+    .inner-list-title {
+      margin-bottom: 0;
+    }
+    p {
+      margin-bottom: 15px;
+      font-size: 12px
+    }
+  }
+
+  .image {
+    text-align: center;
+    img {
+      width: 180px;
+    }
+  }
+
+  .other-description {
+    margin-bottom: 15px;
+  }
+}
+
+.contacts-list {
+  .item {
+    border-width: 1px 0 0;
+    padding: 5px 0 10px;
+  }
+
+  .item:first-child {
+    border:0
+  }
+}
+
+.popup-list-option {
+
+  display: block;
+  border-bottom: 1px solid #fff;
+  margin: -9px;
+  padding: 15px 10px;
+
+  &:last-child { border: 0 }
+  &>input {
+    visibility: hidden;
+    position: absolute;
+  }
+  &.selected {
+    background: #387ef5;
+    color: #fff
+  }
+
+}

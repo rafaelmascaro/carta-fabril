@@ -1,0 +1,73 @@
+.overview {
+  .padding {
+    padding: 15px 15px 15px 15px;
+  }
+
+  h1.section-header {
+    color: #000;
+    font-size: 25px;
+    font-weight: lighter;
+    margin-bottom: 15px;
+    padding-bottom: 3px;
+  }
+
+  h2.section-header {
+    color: #000;
+    font-size: 20px;
+    font-weight: lighter;
+    margin-top: 30px;
+    border-bottom: 1px #00a88a solid;
+    padding-bottom: 3px;
+  }
+
+  .client-section {
+    margin-bottom: 15px;
+
+    p {
+      margin: 0 0 5px;
+
+      span {
+        &.red {
+          color: red;
+        }
+      }
+    }
+  }
+
+  .angular-google-map-container { height: 200px; }
+
+  .button.checkin {
+    background-color: #f87b00;
+
+    i:before {
+      font-size: 22px;
+      margin-right: 5px;
+
+      position: relative;
+      top: 2px;
+    }
+
+    i.fa-spinner:before {
+      font-size: 22px;
+      margin-right: 34px;
+      margin-left: 35px;
+
+      position: relative;
+      top: 2px;
+    }
+  }
+
+  .checkin-info {
+    font-size: 10px;
+    line-height: 1.2
+  }
+
+  .checkin-info-title {
+    color: #0083b4;
+    font-weight:bold;
+  }
+
+  .checkin-info-date {
+    font-weight: bold;
+  }
+}

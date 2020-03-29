@@ -1,0 +1,59 @@
+<ion-modal-view class="detail-modal">
+  <ion-header-bar align-title="left">
+    <p class="title">{{ delinquency.name | characters:35 }}</p>
+    <button class="button" ng-click="close()">FECHAR <i class="icon ion-ios-close-outline"></i></button>
+  </ion-header-bar>
+
+  <form name="form">
+    <ion-content class="padding">
+      <dl class="detail-items">
+
+        <dt>Dias em Atraso</dt>
+        <dd>{{ delinquency.delayedDays }}</dd>
+
+        <dt>Parcela</dt>
+        <dd>{{ delinquency.parcel }}</dd>
+
+        <dt>Série</dt>
+        <dd>{{ delinquency.invoiceSerialNumber }}</dd>
+
+        <dt>Tipo</dt>
+        <dd>{{ delinquency.type }}</dd>
+
+        <dt>Cód Vendedor</dt>
+        <dd>{{ delinquency.salerCode }}</dd>
+
+        <dt>Vendedor</dt>
+        <dd>{{ delinquency.salerName }}</dd>
+
+        <dt>Data de Emissão</dt>
+        <dd>{{ delinquency.orderDate | date:'dd/MM/yyyy' }}</dd>
+
+        <dt>Data de Vencimento</dt>
+        <dd>{{ delinquency.dueDate | date:'dd/MM/yyyy' }}</dd>
+
+        <dt>Número da Nota Fiscal</dt>
+        <dd>{{ delinquency.invoice }}</dd>
+
+        <dt>Condição de Pagamento</dt>
+        <dd>{{ delinquency.paymentCondition }}</dd>
+
+        <dt>Valor do Título</dt>
+        <dd>{{ delinquency.totalAmount | currency:"R$ " }}</dd>
+
+        <dt>Saldo do Título</dt>
+        <dd>{{ delinquency.balance | currency:"R$ " }}</dd>
+
+        <dt ng-if="delinquency.phonecharges.length">Telecobranças</dt>
+        <dd ng-if="delinquency.phonecharges.length">
+          <ul class="inner-list inner-list-compact">
+            <li ng-repeat="phonecharge in delinquency.phonecharges track by phonecharge.id">
+              <h4 class="inner-list-title">{{ phonecharge.date | date:'dd/MM/yyyy HH:mm'}}</h4>
+              <p>{{ phonecharge.history }}</p>
+            </li>
+          </ul>
+        </dd>
+      </dl>
+    </ion-content>
+  </form>
+</ion-modal-view>

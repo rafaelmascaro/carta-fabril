@@ -1,0 +1,13 @@
+<ion-view view-title="Histórico de Pedido" cache-view="false">
+  <ion-nav-title>Histórico de pedidos</ion-nav-title>
+
+  <ion-nav-buttons side="right">
+    <button class="button button-small button-icon" ng-click="openFilter($event)">
+      <i class="fa fa-filter"></i>
+    </button>
+  </ion-nav-buttons>
+
+  <ion-content padding="true" class="order-history client-tab">
+    <ng-include src="'templates/orders_tabs.html'" />
+  </ion-content>
+</ion-view>

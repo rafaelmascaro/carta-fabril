@@ -1,0 +1,19 @@
+<ion-modal-view class="detail-modal">
+  <ion-header-bar align-title="left">
+    <p class="title">{{ visitRegistration.category | characters:35 }}</p>
+    <button class="button" ng-click="close()">FECHAR <i class="icon ion-ios-close-outline"></i></button>
+  </ion-header-bar>
+
+  <form name="form">
+    <ion-content class="padding">
+      <dl class="detail-items">
+        <dt>Data / Hora</dt>
+        <dd>{{ visitRegistration.createdDate | date:'dd/MM/yyyy HH:mm:ss' }}</dd>
+
+        <dt>Observação</dt>
+        <dd>{{ visitRegistration.observations }}</dd>
+      </dl>
+
+    </ion-content>
+  </form>
+</ion-modal-view>

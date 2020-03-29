@@ -1,0 +1,29 @@
+<ion-modal-view class="order-exceptions-warning">
+  <ion-header-bar align-title="left">
+    <p class="title"><i class="fa fa-exclamation-triangle"></i>Exceções à regra</p>
+    <button class="button" ng-click="closeExceptions(true)">CANCELAR <i class="icon ion-ios-close-outline"></i></button>
+  </ion-header-bar>
+
+  <ion-content class="padding">
+    <div class="exceptions-reason">
+
+      <label for="exception-reason">Justifique</label>
+      <textarea id="exception-reason" class="input-control text" ng-model="orderService.order.ruleExceptionNote">
+      </textarea>
+
+    </div>
+
+    <div class="exceptions-content">
+      <div class="exception" ng-repeat="exception in orderService.exceptions">
+        <p class="exception-title">{{orderService.exceptionsMessages[exception].name}}</p>
+        <p>{{orderService.exceptionsMessages[exception].message}}</p>
+      </div>
+    </div>
+  </ion-content>
+
+  <ion-footer-bar>
+    <button class="button pull-right" ng-click="closeExceptions(false)">
+      Salvar justificativa
+    </button>
+  </ion-footer-bar>
+</ion-modal-view>

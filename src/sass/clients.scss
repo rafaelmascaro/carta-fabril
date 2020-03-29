@@ -1,0 +1,78 @@
+@import "variables";
+
+.clients {
+
+  .padding {
+    padding: 5px 15px 15px 15px;
+  }
+
+  .list-header {
+    margin-top: 0;
+    padding: 5px 0;
+  }
+
+  .item.item-header {
+    border-width: 0px;
+    border-style: none;
+    padding: 10px 0px;
+
+    h1 {
+      color: #000;
+      font-size: 20px;
+      font-weight: lighter;
+      border-bottom: 1px #00a88a solid;
+      padding-bottom: 3px;
+    }
+  }
+
+  .item {
+    padding: 10px 0px 10px 0px;
+    border-style: dotted;
+    border-width: 0px 0px 2px 0px;
+
+    &:hover {
+      background-color: rgba(127, 127, 127, 0.1);
+    }
+
+    h2 {
+      margin: 0 0 5px 0;
+    }
+
+    p {
+      font-weight: lighter;
+      font-size: 12px;
+      margin-bottom: 0;
+    }
+
+    i.icon, i.fa {
+      position: relative;
+      display: inline-block;
+      font-size: 14px;
+      color: #00a88a;
+      margin-right: 10px;
+      text-align: center;
+      width: 15px;
+    }
+  }
+
+  ul > li.item > div {
+    top: 10px;
+    right: 0;
+    position: absolute;
+
+    i.fa-green {
+      font-size: 26px !important;
+      color: green !important;
+    }
+
+    i.fa-red {
+      font-size: 26px !important;
+      color: red !important;
+    }
+
+    i.fa {
+      font-size: 18px;
+      color: red;
+    }
+  }
+}

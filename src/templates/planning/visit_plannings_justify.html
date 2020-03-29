@@ -1,0 +1,20 @@
+<ion-view>
+  <ion-nav-title>Visitas Não Justificadas</ion-nav-title>
+
+  <ion-content padding="true" class="visit-plannings">
+      <div>
+        <div class="empty-list-msg" ng-if="!justifications.length">Você ainda não possui registros de planejamentos</div>
+        <ul>
+          <li class="item" ng-click="openJustify('{{justify.Id}}')"  ng-repeat="justify in justifications">
+            <div class="gray-bar">
+              <h2>{{justify.NomeDoCliente}}</h2>
+              <p>Data: {{justify.DataDaVisita | date:'dd/MM/yyyy'}}</p>
+            </div>
+            <p class="observation">{{justify.NomeDoVendedor}}</p>
+            <p class="observation">Código Cliente: {{justify.CodCliente}}</p>
+            <p class="observation">Tipo Visita: {{justify.TipoVisita}}</p>
+          </li>
+        </ul>
+      </div>
+    </ion-content>    
+</ion-view>
