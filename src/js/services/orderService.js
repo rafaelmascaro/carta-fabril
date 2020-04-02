@@ -768,7 +768,7 @@ cartaFabrilServices.service('OrderService', [
       });
  
       //Referente ao projeto Paletizacao
-      if(produtoDaCondEspecial && (newDate >= produtoDaCondEspecial.CondicaoEspecial__r.dataInicial__c && newDate <= produtoDaCondEspecial.CondicaoEspecial__r.dataFinal__c)) {
+      if(produtoDaCondEspecial && (newDate >= produtoDaCondEspecial.CondicaoEspecial__r.dataInicial__c && newDate <= produtoDaCondEspecial.CondicaoEspecial__r.dataLimiteUtilizacao__c)) {
         desc = produtoDaCondEspecial.Desconto__c ? produtoDaCondEspecial.Desconto__c : 0;
       }
 
