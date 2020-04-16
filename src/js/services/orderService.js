@@ -346,14 +346,14 @@ cartaFabrilServices.service('OrderService', [
        mostrar apenas os que tem paletização cadastrada 
        SE o campo Padrão de Paletização na conta for "Tipo cliente", 
        caso contrário manter a regra atual
-      */
+      
      
       if (self.client.padraoPaletizacao__c === 'Cliente') {
         this.products = this.products
         .filter(product => self.Palletizations
           .some(pallet => pallet.Produto__c === product.produtoId__c))
       } 
-      
+      */
       this.sortedProducts = _(this.products)
         .sortBy('ordenacaoProduto__c')
         .groupBy('categoriaProduto__c')
