@@ -1,14 +1,16 @@
-cartaFabrilOrders.controller("RightMenuController", ["$scope", "OrderService",
-  function RightMenuController($scope, OrderService) {
+cartaFabrilOrders.controller("RightMenuController", ["$scope", "$rootScope","OrderService",
+  function RightMenuController($scope, $rootScope,OrderService) {
 
   $scope.orderService = OrderService
 
   $scope.select = function (id) {
-    OrderService.selectProduct(id)
+    OrderService.selectProduct(id);
+	$rootScope.$broadcast('update:DatepickerMinDate');
   }
 
   $scope.unselect = function (id) {
-    OrderService.unselectProduct(id)
+    OrderService.unselectProduct(id);
+	$rootScope.$broadcast('update:DatepickerMinDate');
   }
 
   $scope.toggleSelect = function (id, selected) {

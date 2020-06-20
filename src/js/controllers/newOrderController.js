@@ -201,6 +201,21 @@ cartaFabrilOrders.controller("OrderConditionsController", ["$scope", "$ionicPopu
   $scope.$on('calculate:averageDiscount:finish', function () {
     $scope.checkException("Items")
   })
+  
+  $scope.$on('update:DatepickerMinDate', function () {
+    var minDate = OrderService.minDeliveryDate();
+    $scope.deliveryDatepicker.options = {
+      formatYear: 'yyyy',
+      language: 'pt-BR',
+      minDate: minDate,
+      startingDay: 0,
+      showWeeks: false
+    }
+
+    if(OrderService.order.deliveryDate && OrderService.order.deliveryDate < minDate)
+      OrderService.order.deliveryDate = null;
+    
+  })
 
   $scope.checkException = function (exception) {
     var functionToBeCalled = "validate" + exception
@@ -266,7 +281,7 @@ cartaFabrilOrders.controller("OrderConditionsController", ["$scope", "$ionicPopu
   })
 }])
 
-cartaFabrilOrders.controller("OrderItemsController", ["$scope", "$ionicModal", "$ionicScrollDelegate", "$ionicPopup", "$timeout", "$location", "OrderService", function ($scope, $ionicModal, $ionicScrollDelegate, $ionicPopup, $timeout, $location, OrderService) {
+cartaFabrilOrders.controller("OrderItemsController", ["$scope", "$rootScope","$ionicModal", "$ionicScrollDelegate", "$ionicPopup", "$timeout", "$location", "OrderService", function ($scope, $rootScope,$ionicModal, $ionicScrollDelegate, $ionicPopup, $timeout, $location, OrderService) {
   $scope.orderService = OrderService
   $scope.verifyingStandardPrice = false
 
@@ -306,7 +321,8 @@ cartaFabrilOrders.controller("OrderItemsController", ["$scope", "$ionicModal", "
   }
 
   $scope.removeItem = function (id) {
-    OrderService.unselectProduct(id)
+    OrderService.unselectProduct(id);
+	$rootScope.$broadcast('update:DatepickerMinDate');
   }
 
   $scope.toggleFooter = function () {

@@ -219,7 +219,7 @@ cartaFabrilServices.service('OrderService', [
       );
     };
 
-    this.deliveryDateDelay = function() {
+	this.deliveryDateDelay = function() {
       if (_.isEmpty(this.selectedProducts)) {
         return this.ufDelays[this.client.codUnFatVigente__c];
       }
@@ -227,6 +227,13 @@ cartaFabrilServices.service('OrderService', [
       var ufDelays = this.ufDelays,
         delays = _(this.selectedProducts)
           .map(function(selectedProduct) {
+            if(self.client.UnidadesFaturamentoProduto__r && self.client.UnidadesFaturamentoProduto__r.totalSize > 0){
+              var produtoCliente = self.client.UnidadesFaturamentoProduto__r.records.find(v=> {return v.ProdutoId__c == selectedProduct.ProdutoId__c});
+
+              if(produtoCliente)
+                return ufDelays[produtoCliente.codUnidadeFaturamento__c]
+            }
+
             return ufDelays[selectedProduct.codUnidadeFaturamento__c];
           })
           .uniq()
