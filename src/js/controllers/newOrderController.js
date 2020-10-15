@@ -47,7 +47,8 @@ cartaFabrilOrders.config([
       url: "/items",
       views: {
         "tab-items": {
-          templateUrl: "templates/new_order/items.html",
+          //templateUrl: "templates/new_order/items.html",
+          templateUrl: !ionic.Platform.isAndroid() ? "templates/new_order/itemsweb.html" : "templates/new_order/items.html",
           controller: "OrderItemsController"
         }
       }
@@ -268,6 +269,9 @@ cartaFabrilOrders.controller("OrderConditionsController", ["$scope", "$ionicPopu
       $scope.orderService.minDuplValue = $scope.orderService.minimumDuplValues[minValueField]
     }
 
+    if(OrderService.order)
+      OrderService['validateDeliveryDate']();
+
   })
 
   $scope.$watch('orderService.order.finDiscount', function (newValue, oldValue) {
@@ -314,10 +318,10 @@ cartaFabrilOrders.controller("OrderItemsController", ["$scope", "$rootScope","$i
 
   $scope.toggleEdition = function (id) {
     OrderService.toggleEdition(id)
-    $timeout(function(){
-      $location.hash('product-' + id);
-      $ionicScrollDelegate.anchorScroll();
-    }, 150)
+    //$timeout(function(){
+    //  $location.hash('product-' + id);
+    //  $ionicScrollDelegate.anchorScroll();
+    //}, 150)
   }
 
   $scope.removeItem = function (id) {

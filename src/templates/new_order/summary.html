@@ -163,13 +163,23 @@
           </div>
         </div>
 
-        <div class="row">
+        <div class="row" ng-show="orderService.client.tipoDeCarga__c != 'Batida'">
           <div class="col">
             <p><strong>Cubagem</strong></p>
           </div>
 
           <div class="col">
             <p>{{product.cubagemTotal__c || 0}}</p>
+          </div>
+        </div>
+
+        <div class="row" ng-show="orderService.client.tipoDeCarga__c != 'Batida'">
+          <div class="col">
+            <p><strong>Quantidade de pallets</strong></p>
+          </div>
+
+          <div class="col">
+            <p>{{(product.saleQtd / product.Paletizacao)  | number : 2}}</p>
           </div>
         </div>
       </div>
@@ -185,6 +195,7 @@
         <p><strong>Quantidade de Venda: </strong>{{orderService.orderQuantity() || 0 }}</p>
         <p><strong>Quantidade Bonificada: </strong> {{orderService.bonusQuantity() || 0 }}</p>
         <p><strong>Quantidade Total: </strong> {{orderService.bonusQuantity() + orderService.orderQuantity()}}</p>
+        <p ng-show="orderService.client.padraoPaletizacao__c != 'Batida'"><strong>Quantidade de Pallets: </strong> {{orderService.quantidePallet()}}</p>
         <p><strong>Percentual Bonus sobre Venda: </strong> {{orderService.orderBonusPercent()}}%</p>
         <p><strong>Cubagem do pedido:</strong> {{orderService.totalVolume() | number : 2}} m³</p>
         <p><strong>Condição de pgto.: </strong>{{orderService.order.paymentOption.Name}}</p>

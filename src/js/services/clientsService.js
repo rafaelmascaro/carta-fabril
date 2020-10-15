@@ -39,8 +39,7 @@ cartaFabrilServices.service('ClientsService', ['$q', 'SalesforceService',  funct
       "FROM Account",
       "WHERE",
         "nomeFantasia__c != null",
-        /*"AND  RecordType.Name = 'Default' AND (",  -- Não pode ser liberado para produção*/
-        "AND (",
+        "AND  RecordType.Name = 'Default' AND (",
           "nomeFantasia__c LIKE '%" + term + "%'",
           "OR Name LIKE '%" + term + "%'",
           "OR cnpjCpf__c LIKE '%" + term + "%'",

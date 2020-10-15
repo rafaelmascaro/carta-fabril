@@ -96,7 +96,6 @@ cartaFabrilFactories.factory('Order', ['OrderItem', 'ProxyDecorator', function (
     this.allCombos = attributes.combos__c
     this.PodeAnteciparEntrega = attributes.PodeAnteciparEntrega__c
     
-    this.tipoCargaCliente__c = attributes.TipoCargaCliente__c
     this.totalAmount = attributes.valorTotalSemImpostos__c
     this.totalQuantity = attributes.QuantidadeTotal__c
     this.totalSubsidized = attributes.QuantidadeTotalBonificada__c

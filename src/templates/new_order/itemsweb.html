@@ -2,7 +2,7 @@
   <ion-nav-title>
     <p class="order-client">{{orderService.client.codigoCliente__c}} - {{orderService.client.nomeFantasia__c}}</p>
     <p class="order-credit">
-      <strong>Crédito</strong> {{orderService.client.limiteCredito__c | currency}} / <strong>Saldo</strong>
+      <strong>Crédito</strong> {{orderService.client.limiteCredito__c | currency}} / <strong>Saldo</strong> 
       {{orderService.client.saldoLimiteCredito__c | currency}}
     </p>
   </ion-nav-title>
@@ -18,14 +18,13 @@
   <ion-content padding="true" class="order-items">
     <ul class="list">
       <li ng-repeat="product in orderService.selectedProducts">
-        <div class="row">
-          <div class="col">
+        <div class="row product-details responsive-xs">
+          <div class="col col-34">
             <h4 ng-class="{'warning':product.discountPercent > product.percDesconto__c}">{{ product.descProdutoNf__c }}</h4>
+			<!-- OLD! <h4>{{ product.descProdutoNf__c }}</h4> -->
             <p>{{ product.CodigoProduto__c }}</p>
           </div>
-        </div>
 
-        <div class="row product-details">
           <div class="col">
             <p class="detail-title">Pr. Lista</p>
             <p><strong>{{ product.precoLista__c | currency }}</strong></p>
@@ -45,7 +44,7 @@
             <p class="detail-title">Qtde.</p>
             <p><strong>{{ product.saleQtd }}</strong></p>
           </div>
-
+          
           <div class="col" ng-show="orderService.client.tipoDeCarga__c != 'Batida'">
             <p class="detail-title">Paletização</p>
             <p><strong>{{ product.Paletizacao | number : 2 }}</strong></p>
@@ -55,79 +54,90 @@
             <p class="detail-title">Qtd. de pallet</p>
             <p ng-class="{'warning':(product.saleQtd % product.Paletizacao) > 0}"><strong>{{ (product.saleQtd / product.Paletizacao) | number : 2 }}</strong></p>
           </div>
-        </div>
-
-        <div class="row product-total">
+          
           <div class="col">
             <p>Total</p>
+            <p><strong>{{ product.liquidPrice * product.saleQtd | currency }}</strong></p>
           </div>
 
-          <div class="col total">
-            <p>{{ product.liquidPrice * product.saleQtd | currency }}</p>
+
+          <div class="col">
+            <div class="row product-edition" ng-class="{ editing: product.editing }">
+              <div class="col">
+                <div class="expand-fields" ng-click="toggleEdition(product.Id)">
+                  <i class="fa fa-angle-down expand"></i>
+                  <i class="fa fa-angle-up retract"></i>
+                </div>
+              </div>
+            </div>
           </div>
+
         </div>
 
         <div id="product-{{product.Id}}" class="row product-edition" ng-class="{ editing: product.editing }">
           <div class="col">
             <div class="product-fields">
               <div class="row">
-                <div class="col col-50 input-group">
+                <div class="col input-group">
                   <label for="product-qtd">Quantidade</label>
-                  <input id="product-qtd" ng-readonly="saleOrBonus(product,orderService) == 'bonus'" class="input-control" type="tel" ng-model="product.saleQtd" ng-change="orderService.calculateBonusDiscount(product)" ui-number-mask="0" />
+                  <input id="product-qtd" ng-readonly="saleOrBonus(product,orderService) == 'bonus'"
+                    class="input-control" type="tel" ng-model="product.saleQtd"
+                    ng-change="orderService.calculateBonusDiscount(product)" ui-number-mask="0" />
                 </div>
 
-                <div class="col col-50 input-group">
+                <div class="col input-group">
                   <label for="discount-value">Preço $</label>
-                  <input id="discount-value" class="input-control" ng-model="product.price" type="tel" ng-change="orderService.calculateDiscount(product)" ng-blur="verifyStandardPrice(product);orderService.automationOfPrices(product,orderService)" value="0" ui-money-mask />
+                  <input id="discount-value" class="input-control" ng-model="product.price" type="tel"
+                    ng-change="orderService.calculateDiscount(product)"
+                    ng-blur="verifyStandardPrice(product);orderService.automationOfPrices(product,orderService)"
+                    value="0" ui-money-mask />
                 </div>
-              </div>
 
-              <div class="row">
-                <div class="col col-50 input-group">
+                <div class="col input-group">
                   <label for="discount-perc">Desconto %</label>
 
                   <div class="input-group-spanned">
-                    <input id="discount-perc" class="input-control" type="tel" ng-model="product.discount" ng-change="orderService.calculatePrice(product)" ng-blur="verifyStandardPrice(product);orderService.automationOfPrices(product,orderService)" ui-number-mask ui-negative-number />
+                    <input id="discount-perc" class="input-control" type="tel" ng-model="product.discount"
+                      ng-change="orderService.calculatePrice(product)"
+                      ng-blur="verifyStandardPrice(product);orderService.automationOfPrices(product,orderService)"
+                      ui-number-mask ui-negative-number />
                     <span class="input-group-addon">%</span>
                   </div>
                 </div>
 
-                <div class="col col-50 input-group">
+                <div class="col input-group">
                   <label for="bonus-qtd">Qtde. Bonificada</label>
-                  <input id="bonus-qtd" ng-readonly="saleOrBonus(product,orderService) == 'sale'" class="input-control" type="tel" ng-model="product.bonusQtd" ng-change="orderService.calculateBonusDiscount(product)" ui-number-mask="0" />
+                  <input id="bonus-qtd" ng-readonly="saleOrBonus(product,orderService) == 'sale'" class="input-control"
+                    type="tel" ng-model="product.bonusQtd" ng-change="orderService.calculateBonusDiscount(product)"
+                    ui-number-mask="0" />
                 </div>
-              </div>
 
-              <div class="row">
-                <div class="col col-33 input-group">
+                <div class="col input-group">
                   <label for="bonus-perc">Bonificação %</label>
                   <p><strong>{{product.bonusPerc | number : 2}}</strong></p>
                 </div>
 
-                <div class="col col-33 input-group" ng-class="{ 'exception': orderService.validateAverageDiscount(product) }">
+                <div class="col input-group" ng-class="{ 'exception': orderService.validateAverageDiscount(product) }">
                   <label>Desc. médio %</label>
                   <p><strong>{{product.averageDiscount | number : 2}}</strong></p>
                 </div>
 
-                <div class="col col-33 input-group">
+                <div class="col input-group">
                   <label>Pr. Liq. Final</label>
                   <p><strong>{{product.finalPrice | number : 2}}</strong></p>
                 </div>
-              </div>
 
-              <div class="row remove-row">
-                <div class="col col-50"></div>
-
-                <div class="col col-50 input-group remove" ng-click="removeItem(product.Id)">
+                <div class="col input-group remove" ng-click="removeItem(product.Id)">
                   <p>Retirar do pedido</p>
                   <i class="fa fa-times-circle fa-2x"></i>
                 </div>
               </div>
             </div>
-
+<!-- NEW
             <div class="expand-fields" ng-click="toggleEdition(product.Id)">
               <i class="fa fa-angle-down expand"></i>
-              <i class="fa fa-angle-up retract"></i>
+              <i class="fa fa-angle-up retract"></i> -->
+			<div class="separe-item"> 
             </div>
           </div>
         </div>
@@ -145,7 +155,7 @@
 
       <div class="col col-45 info">
         <p>Total s/ imposto</p>
-        <p class="big">{{orderService.orderTotal() | currency}}</p>
+        <p>{{orderService.orderTotal() | currency}}</p>
       </div>
 
       <div class="col col-10 action" ng-click="toggleFooter()">

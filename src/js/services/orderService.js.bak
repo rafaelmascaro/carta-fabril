@@ -157,7 +157,6 @@ cartaFabrilServices.service('OrderService', [
             self.order.tipoCargaCliente__c = orderData.order.tipoCargaCliente__c;
             self.order.finDiscount = orderData.order.percDescFinanceiro__c;
             self.order.shipping = orderData.order.tipoFrete__c;
-            self.paymentOptions = [...self.paymentOptions,...self.SpecialPaymentOptions];
             self.order.paymentOption = _.find(self.paymentOptions, {
               Id: orderData.order.condicaoPgto__c
             });
@@ -998,7 +997,7 @@ cartaFabrilServices.service('OrderService', [
             title: 'Tipo de Carga inválida!',
             template: 'Não foi possível enviar o pedido, pois a conta possui um tipo de carga batida.'
           })
-      }else{
+      } else{
 
         self.orderStatus = draft ? 'Rascunho' : 'Pronto';
 
