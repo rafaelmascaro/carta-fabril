@@ -18,7 +18,6 @@ Para parar de avisar sobre o update do Ionic CLI<br/>
 ```gulp web:release -e sds```<br/>
 ```gulp web:release -e development```<br/>
 ```gulp web:release -e qa```<br/>
-```gulp web:release -e homolog```<br/>
 ```gulp web:release -e production```
 <br/>
 <br/>

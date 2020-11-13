@@ -1,12 +1,13 @@
 {
-  "env": "qa",
-  "appName": "Carta Fabril Homolog",
-  "appId": "br.com.carta_fabril.homolog",
-  "sfClientId": "3MVG9Iu66FKeHhIPe91yESdsJL3LP8ueoRFXvXUQkxxmJmPX0EPnJD2KgVU1xACTeOPlYsgiTMu6j.a_2U.6w",
-  "sfClientSecret": "57110860DBB3DE8358BCBDD70A9AE8D3F52F5BDF30E0FCDD1C1CEE8F5748F039",
-  "sfOauthUrl": "https://test.salesforce.com/",
-  "sfPartnerOauthUrl": "https://sfqa-portaldevendascartafabril.cs2.force.com/representantes/",
-  "sfRedirectUri": "cartafabril://from_salesforce",
-  "gmapsApiKey": "AIzaSyCLWbpUqdb2tdco8Q5dOs98TSqWdO4utEE",
-  "destination": "mobile"
-}
+    "env": "newapp",
+    "appName": "Carta Fabril New App",
+    "appId": "br.com.carta_fabril.newapp.qa",
+    "sfClientId": "3MVG9qwrtt_SGpCvjWgjr6iTlza0.ITALKCPghA8.mj5TnyK5y.Y9x.wnWOkbr.ztkogobhSIL_jrHJnL8iSz",
+    "sfClientSecret": "D2AC35DF1BE771B7CF2BCE766B73DF098D1DC8E98ED932FD8ED62A69E5D3BFE3",
+    "sfOauthUrl": "https://test.salesforce.com/",
+    "sfPartnerOauthUrl": "https://sfnewapp-portaldevendascartafabril.cs42.force.com/representantes/",
+    "sfRedirectUri": "cartafabril://from_salesforce",
+    "gmapsApiKey": "AIzaSyCLWbpUqdb2tdco8Q5dOs98TSqWdO4utEE",
+    "destination": "mobile"
+  }
+  

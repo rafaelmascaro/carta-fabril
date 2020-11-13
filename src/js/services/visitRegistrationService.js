@@ -74,13 +74,12 @@ cartaFabrilServices.service('VisitRegistrationService', ['$q', '$ionicPopup', '$
   this.buildListQuery = function buildListQuery(filterParams) {
     return [
       "SELECT",
-        "Name, obsVisita__c, Categoria__c, CreatedDate",
+        "Name, obsVisita__c, Categoria__c, CreatedDate, DataCheckin__c, DataCheckout__c,",
+        "EnderecoCheckin__c, EnderecoCheckout__c",
       "FROM " + this.objectName,
       "WHERE contaId__c = '" + filterParams.clientId + "'",
-        (filterParams.isLastCheckin ? "AND Categoria__c = '" + this.checkInCategory + "'" : ""),
-        (filterParams.startDate ? "AND DataDaVisita__c >= " + filterParams.startDate.toISOString().substring(0,10) : ""),
-        (filterParams.endDate ? "AND DataDaVisita__c < " + filterParams.endDate.toISOString().substring(0,10) : "AND DataDaVisita__c <= " + new Date().toISOString().substring(0,10)),
-      "ORDER BY CreatedDate desc"
+        (filterParams.isLastCheckin ? "AND Categoria__c = '" + this.checkInCategory + "' AND DataCheckin__c <> null" : ""),
+        (filterParams.isLastCheckin ? "ORDER BY DataCheckin__c desc" : "ORDER BY CreatedDate desc")
     ].filter(function (str) { return str.length }).join(" ").trim();
   }
 
@@ -98,9 +97,13 @@ cartaFabrilServices.service('VisitRegistrationService', ['$q', '$ionicPopup', '$
 
 cartaFabrilFactories.factory('VisitRegistration', ['ProxyDecorator',  function (ProxyDecorator) {
   return ProxyDecorator(function VisitRegistration(attributes) {
-    this.id           = attributes.Name
-    this.category     = attributes.Categoria__c
-    this.observations = attributes.obsVisita__c
-    this.createdDate  = attributes.CreatedDate || Date.now()
+    this.id            = attributes.Name
+    this.category      = attributes.Categoria__c
+    this.observations  = attributes.obsVisita__c
+    this.DataCheckin   = attributes.DataCheckin__c
+    this.DataCheckout  = attributes.DataCheckout__c
+    this.createdDate   = attributes.CreatedDate || Date.now()
+    this.EnderecoCheckin  = attributes.EnderecoCheckin__c
+    this.EnderecoCheckout = attributes.EnderecoCheckout__c
   })
 }])
