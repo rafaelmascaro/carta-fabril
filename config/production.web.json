@@ -6,7 +6,7 @@
   "sfClientSecret": "3765675858294913068",
   "sfOauthUrl": "https://login.salesforce.com/",
   "sfPartnerOauthUrl": "https://portaldevendascartafabril.force.com/representantes",
-  "sfRedirectUri": "https://app-carta-fabril.herokuapp.com/from_salesforce",
+  "sfRedirectUri": "https://carta-fabril.herokuapp.com/from_salesforce",
   "gmapsApiKey": "AIzaSyCLWbpUqdb2tdco8Q5dOs98TSqWdO4utEE",
   "destination": "web"
 }

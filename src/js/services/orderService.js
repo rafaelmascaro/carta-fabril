@@ -1057,7 +1057,7 @@ cartaFabrilServices.service('OrderService', [
       alter = false;
       var cont = 0;
 
-      let pFamilias = self.pFamilia.NomeFamilia__c.split('\r\n');
+      let pFamilias = self.pFamilia.NomeFamilia__c.split('\r\n').concat(self.pFamilia.NomeFamilia2__c.split('\r\n'));
 
       for (var i = 0; i < orderService.selectedProducts.length; i++) {
         if (
